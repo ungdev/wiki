@@ -1,6 +1,4 @@
-//////////////////////////////
-// Base article controllers //
-//////////////////////////////
+/* Base article controllers */
 
 'use strict';
 

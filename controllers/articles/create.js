@@ -1,6 +1,4 @@
-////////////////////////
-// Creates an article //
-////////////////////////
+/* Creates an article */
 
 'use strict';
 

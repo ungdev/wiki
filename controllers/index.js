@@ -1,6 +1,4 @@
-////////////////////
-// CRUD base file //
-////////////////////
+/* CRUD base file */
 
 'use strict';
 

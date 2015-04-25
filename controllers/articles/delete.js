@@ -1,6 +1,4 @@
-////////////////////////
-// Deletes an article //
-////////////////////////
+/* Deletes an article */
 
 'use strict';
 

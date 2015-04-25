@@ -1,6 +1,4 @@
-//////////////////////
-// Main entry point //
-//////////////////////
+/* Main entry point */
 
 'use strict';
 
@@ -9,7 +7,7 @@ var bodyParser = require('body-parser');
 var r          = require('rethinkdb');
 
 var app         = express();
-var crud        = require('./crud');
+var controller  = require('./controllers');
 var config      = require('./config.json');
 var log         = require('./lib/log')(config);
 var APIError    = require('./lib/APIError');
@@ -17,11 +15,11 @@ var setupRouter = require('./lib/router');
 
 log.debug('Welcome to Wiki UTT');
 
-var cruds;
+var controllers;
 
-crud()
-    .then(function (cruds_) {
-        cruds = cruds_;
+controller()
+    .then(function (controllers_) {
+        controllers = controllers_;
     })
     .catch(function (err) {
         log.error(err);
@@ -44,7 +42,7 @@ r.connect(config.db)
         app.use(express.static(__dirname + '/public'));
 
         // Base CRUD
-        setupRouter(app)(cruds);
+        setupRouter(app)(controllers);
 
         // 404 handling
         app.use(function (req, res, next) {

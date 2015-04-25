@@ -1,6 +1,4 @@
-////////////////////////
-// Updates an article //
-////////////////////////
+/* Updates an article */
 
 'use strict';
 
