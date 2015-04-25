@@ -48,19 +48,25 @@ r.connect(config.db)
 
         // 404 handling
         app.use(function (req, res, next) {
-            next(new APIError(404, 'Not Found'));
+            return next(new APIError(404, 'Not Found'));
         });
 
         // Error handling
-        app.use(function (err, req, res, next) {
-            log.error(err.status + ' on ' + req.originalUrl);
-
-            if (config.log.verbose && err.additionnal) console.log(err.additionnal);
-            if (config.log.stack) console.trace(err.stack);
+        app.use(function (err, req, res) {
+            if (err.status !== 404) {
+                log.error(err.status + ' on ' + req.originalUrl);
+                if (config.log.verbose && err.additionnal) console.log(err.additionnal);
+                if (config.log.stack) console.trace(err.stack);
+            } else {
+                log.warn('404 on ' + req.originalUrl);
+            }
 
             if (req.xhr) return res.status(err.status).end();
 
-            return res.redirect(config.baseURL + '/error.html#' + err.status);
+            //return res.redirect(config.baseURL + '/error.html#' + err.status);
+            return res
+                .status(err.status)
+                .end();
         });
 
         app.listen(config.port);
