@@ -13,8 +13,7 @@ module.exports = {
     validation: form(
         field('isDefaultEditable').toBooleanStrict(),
         field('isDefaultVisible').toBooleanStrict(),
-        field('revision').is(/^\d+$/),
-        field('category_id').is(/^\d+$/)
+        field('category').is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
     ),
     /**
      * This controller creates one article
@@ -25,8 +24,7 @@ module.exports = {
      * Article : {
      *     [isDefaultEditable : bool]
      *     [isDefaultVisible  : bool]
-     *     [revision          : int]
-     *     [category_id       : int]
+     *     [category          : int]
      * }
      * @param  {object}   req  The request
      * @param  {object}   res  The response
@@ -41,6 +39,8 @@ module.exports = {
         var log      = app.locals.log;
 
         if (!req.form.isValid) return next(new APIError(400, 'Bad Request', req.form.errors));
+
+        req.form.updatedAt = new Date();
 
         log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
         r.db('wiki').table('articles')
