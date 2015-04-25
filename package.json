@@ -1,0 +1,28 @@
+{
+  "name": "wiki",
+  "version": "1.0.0",
+  "description": "UTT NPO Wiki",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "UTT",
+    "NPO",
+    "Wiki"
+  ],
+  "author": "Gabriel Juchault",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^2.9.24",
+    "body-parser": "^1.12.3",
+    "bower": "^1.4.1",
+    "cli-color": "^1.0.0",
+    "express": "^4.12.3",
+    "express-form": "^0.12.4",
+    "express-params": "0.0.3",
+    "form": "^0.2.4",
+    "rethinkdb": "^2.0.0",
+    "winston": "^1.0.0"
+  }
+}

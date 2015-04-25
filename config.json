@@ -1,0 +1,15 @@
+{
+	"port": 8081,
+    "log": {
+        "console": true,
+        "file": false,
+        "level": "debug",
+        "stack": true,
+        "verbose": true
+    },
+    "baseURL": "http://localhost/wiki",
+	"db": {
+		"host": "localhost",
+		"port": 28015
+	}
+}
