@@ -36,6 +36,7 @@ module.exports = {
             log.debug('r.db(wiki).table(articles).get(' + uid + ')');
             r.db('wiki').table('articles')
                 .get(uid)
+                .filter(r.row('deletedAt').eq(null))
                 .run(conn)
                 .then(function (article) {
                     if (!article) {
@@ -53,6 +54,7 @@ module.exports = {
         } else {
             log.debug('r.db(wiki).table(articles).toArray()');
             r.db('wiki').table('articles')
+                .filter(r.row('deletedAt').eq(null))
                 .run(conn)
                 .then(function (articles) {
                     return articles.toArray();

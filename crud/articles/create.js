@@ -45,6 +45,7 @@ module.exports = {
 
         req.form.createdAt = new Date();
         req.form.updatedAt = new Date();
+        req.form.deletedAt = null;
 
         log.debug('r.db(wiki).table(articles).insert(' + JSON.stringify(req.form) + ')');
         r.db('wiki').table('articles')
