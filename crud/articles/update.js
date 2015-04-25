@@ -1,6 +1,6 @@
-////////////
-// Update //
-////////////
+////////////////////////
+// Updates an article //
+////////////////////////
 
 'use strict';
 
@@ -16,12 +16,27 @@ module.exports = {
         field('revision').is(/^\d+$/),
         field('category_id').is(/^\d+$/)
     ),
+    /**
+     * This controller creates one article
+     * 400 error if the article is malformed
+     * 404 error if the article is not found
+     * 500 error if the rethinkdb request fails
+     * 200 otherwise
+     * Article : {
+     *     [isDefaultEditable : bool]
+     *     [isDefaultVisible  : bool]
+     *     [revision          : int]
+     *     [category_id       : int]
+     * }
+     * @param  {object}   req  The request
+     * @param  {object}   res  The response
+     * @param  {Function} next The next middleware
+     */
     controller: function (req, res, next) {
         var app      = req.app;
 
         var r        = app.locals.r;
         var conn     = app.locals.conn;
-        var config   = app.locals.config;
         var APIError = app.locals.APIError;
         var log      = app.locals.log;
 
@@ -33,13 +48,16 @@ module.exports = {
             .update(req.form)
             .run(conn)
             .then(function (result) {
-                res
+                if (result.skipped === 1) {
+                    return next(new APIError(404, 'Not Found', result));
+                }
+                return res
                     .status(200)
                     .json(result)
                     .end();
             })
             .catch(function (err) {
-                next(new APIError(500, 'SQL Server Error', err));
+                return next(new APIError(500, 'SQL Server Error', err));
             });
     }
 };
