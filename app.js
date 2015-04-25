@@ -52,7 +52,8 @@ r.connect(config.db)
         });
 
         // Error handling
-        app.use(function (err, req, res) {
+        // Keep the four arguments even if next is unused. The number of arguments is checked
+        app.use(function (err, req, res, next) {
             if (err.status !== 404) {
                 log.error(err.status + ' on ' + req.originalUrl);
                 if (config.log.verbose && err.additionnal) console.log(err.additionnal);
