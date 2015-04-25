@@ -2,6 +2,7 @@
   "name": "wiki",
   "version": "1.0.0",
   "description": "UTT NPO Wiki",
+  "repository": "https://github.com/expressjs/session",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +21,7 @@
     "cli-color": "^1.0.0",
     "express": "^4.12.3",
     "express-form": "^0.12.4",
-    "express-params": "0.0.3",
+    "express-session": "^1.11.1",
     "form": "^0.2.4",
     "rethinkdb": "^2.0.0",
     "winston": "^1.0.0"
