@@ -6,7 +6,7 @@
 
 module.exports = {
     'create': require('./create'),
-    // 'read':   require('./read'),
-    'update': require('./update'),
+    'read':   require('./read'),
+    'update': require('./update')
     // 'delete': require('./delete'),
 };
