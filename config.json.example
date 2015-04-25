@@ -1,5 +1,5 @@
 {
-	"port": 8081,
+    "port": 8081,
     "log": {
         "console": true,
         "file": false,
@@ -8,8 +8,8 @@
         "verbose": true
     },
     "baseURL": "http://localhost/wiki",
-	"db": {
-		"host": "localhost",
-		"port": 28015
-	}
+    "db": {
+        "host": "localhost",
+        "port": 28015
+    }
 }
