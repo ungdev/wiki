@@ -44,6 +44,8 @@
         });
 
     $search.keyup(function (e) {
+        if (e.keyCode === 13 ||  e.keyCode === 38 ||  e.keyCode === 40) return;
+
         var search = $search.val();
         var $articles = $('li .collection-item').toArray();
 
@@ -81,10 +83,11 @@
                     return 0;
                 })
                 // Generates HTML
-                .forEach(function (result) {
+                .forEach(function (result, i) {
+                    var firstClass = (i === 0) ? ' active' : '';
                     $('<a/>')
                         .attr('href', $articles[result.index].href)
-                        .addClass('collection-item grey-text text-darken-2')
+                        .addClass('collection-item grey-text text-darken-2' + firstClass)
                         .html(result.rendered)
                         .appendTo($searchTarget);
                 });
@@ -100,5 +103,30 @@
                 $search.removeClass('invalid').removeClass('valid');
             }
         });
+    });
+
+    $search.keydown(function (e) {
+        console.log(e.keyCode);
+        if (e.keyCode === 13) {
+            location.href = $searchTarget.find('.active').attr('href');
+            e.stopImmediatePropagation();
+            return;
+        }
+        if (e.keyCode === 38) {
+            var $prev = $searchTarget.find('.active').prev();
+            if ($prev.length > 0) {
+                $prev.addClass('active').next().removeClass('active');
+            }
+            e.stopImmediatePropagation();
+            return;
+        }
+        if (e.keyCode === 40) {
+            var $next = $searchTarget.find('.active').next();
+            if ($next.length > 0) {
+                $next.addClass('active').prev().removeClass('active');
+            }
+            e.stopImmediatePropagation();
+            return;
+        }
     });
 }());

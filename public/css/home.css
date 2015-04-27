@@ -10,3 +10,11 @@
 .home .highlight {
     font-weight: bold;
 }
+
+.home .collection .collection-item.active {
+    color: #eafaf9 !important;
+}
+
+.home .collection .collection-item.active .highlight {
+    color: #eafaf9 !important;
+}
