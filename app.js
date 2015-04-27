@@ -3,6 +3,7 @@
 'use strict';
 
 var express    = require('express');
+var session    = require('express-session');
 var bodyParser = require('body-parser');
 var r          = require('rethinkdb');
 
@@ -35,6 +36,13 @@ r.connect(config.db)
         app.locals.APIError = APIError;
     })
     .then(function () {
+        // Session
+        app.use(session({
+            secret: config.secret,
+            resave: false,
+            saveUninitialized: false
+        }));
+
         // Body parsing
         app.use(bodyParser.json());
 

@@ -1,5 +1,6 @@
 {
     "port": 8081,
+    "secret": "",
     "log": {
         "console": true,
         "file": false,
@@ -11,5 +12,10 @@
     "db": {
         "host": "localhost",
         "port": 28015
+    },
+    "etu": {
+        "baseURL": "https://etu.utt.fr/api/",
+        "id": "",
+        "secret": ""
     }
 }
