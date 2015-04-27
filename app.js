@@ -6,6 +6,7 @@ var express    = require('express');
 var session    = require('express-session');
 var bodyParser = require('body-parser');
 var r          = require('rethinkdb');
+var morgan     = require('morgan');
 
 var app         = express();
 var controller  = require('./controllers');
@@ -36,6 +37,15 @@ r.connect(config.db)
         app.locals.APIError = APIError;
     })
     .then(function () {
+        // Request logger
+        app.use(morgan(':method :url :status :response-time ms', {
+            stream: {
+                write: function (message) {
+                    log.info(message.trim());
+                }
+            }
+        }));
+
         // Session
         app.use(session({
             secret: config.secret,
