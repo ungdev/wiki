@@ -2,7 +2,11 @@
     padding-top: 50px;
 }
 
-.home .collection {
+.home li .collection {
     border: none;
     margin: 0.5rem 0;
+}
+
+.home .highlight {
+    font-weight: bold;
 }
