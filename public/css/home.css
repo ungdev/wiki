@@ -1,0 +1,8 @@
+.home {
+    padding-top: 50px;
+}
+
+.home .collection {
+    border: none;
+    margin: 0.5rem 0;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wiki - <%= title %></title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="A simple wiki for UTT NPOs">
+
+        <link rel="stylesheet" href="../bower_components/materialize/dist/css/materialize.min.css">
+
+        <link rel="stylesheet" href="../css/main.css"/>
+
+        <% if (connected) { %>
+            <link rel="stylesheet" href="../css/home.css">
+        <% } else { %>
+            <link rel="stylesheet" href="../css/login.css">
+        <% } %>
+    </head>
+    <body class="grey-text text-darken-4">
+        <main class="container login home">
+            <div class="row center-align">
+                <h1>Wiki UTT</h1>
+            </div>
+            <div class="row">
+                <% if (connected) { %>
+                    <div class="input-field col s12 blue-text">
+                        <i class="mdi-action-search prefix"></i>
+                        <input id="search" type="text" class="grey-text text-darken-4" autocomplete="off">
+                        <label class="active grey-text  " for="search">Rechercher</label>
+                    </div>
+                <% } else { %>
+                    <div class="col s8 offset-s2 center-align">
+                        <a class="waves-effect waves-light btn blue" id="login">
+                            <i class="mdi-action-lock-open left"></i>
+                            Connexion avec le site étu
+                        </a>
+                    </div>
+                <% } %>
+            </div>
+            <% if (connected) { %>
+                <ul class="collapsible popout" data-collapsible="accordion">
+                    <% categories.forEach(function (category) { %>
+                        <li id="<%= category.id %>">
+                            <div class="collapsible-header">
+                                <i class="mdi-file-folder"></i>
+                                <%= category.name %>
+                            </div>
+                            <div class="collapsible-body">
+                                <div class="collection">
+                                </div>
+                            </div>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </main>
+
+        <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
+
+        <% if (connected) { %>
+            <script defer src="../js/home.js"></script>
+        <% } else { %>
+            <script defer src="../js/login.js"></script>
+        <% } %>
+    </body>
+</html>

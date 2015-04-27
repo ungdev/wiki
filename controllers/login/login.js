@@ -47,7 +47,9 @@ module.exports = {
                     firstName: data.response.data.firstName,
                     lastName: data.response.data.lastName
                 };
-                console.log(req.session.userData);
+
+                req.session.connected = true;
+
                 return get_(config.etu.baseURL + 'private/user/organizations?access_token=' + req.session.accessToken);
             })
             .then(function (data) {
@@ -66,8 +68,7 @@ module.exports = {
                 });
 
                 return res
-                    .status(200)
-                    .end();
+                    .redirect('/');
             })
             .catch(function (err_) {
                 var err = err_[0];

@@ -40,8 +40,13 @@ r.connect(config.db)
         app.use(session({
             secret: config.secret,
             resave: false,
-            saveUninitialized: false
+            saveUninitialized: false,
+            cookie: { maxAge: 60 * 60000 }
         }));
+
+        // EJS
+        app.set('views', __dirname + '/public/views');
+        app.set('view engine', 'ejs');
 
         // Body parsing
         app.use(bodyParser.json());

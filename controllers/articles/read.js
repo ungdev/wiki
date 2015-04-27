@@ -50,7 +50,7 @@ module.exports = {
                     return next(new APIError(500, 'SQL Server Error', err));
                 });
         } else {
-            log.debug('r.db(wiki).table(articles).toArray()');
+            log.debug('r.db(wiki).table(articles).filter(r.row(deletedAt).eq(null).toArray()');
             r.db('wiki').table('articles')
                 .filter(r.row('deletedAt').eq(null))
                 .run(conn)
