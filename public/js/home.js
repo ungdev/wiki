@@ -5,6 +5,7 @@
 
     var $search = $('#search');
     var $searchTarget = $('#searchResults').hide();
+    var prevValue = '';
 
     // Get all the articles
     $.get('/articles/')
@@ -47,6 +48,10 @@
         if (e.keyCode === 13 ||  e.keyCode === 38 ||  e.keyCode === 40) return;
 
         var search = $search.val();
+
+        if (prevValue === search) return;
+        prevValue = search;
+
         var $articles = $('li .collection-item').toArray();
 
         $searchTarget.slideUp(function () {
