@@ -31,6 +31,15 @@
 
                 $a.appendTo($target);
             });
+
+            // Add number of articles to category
+            $('.collapsible-header').each(function () {
+                var $self = $(this);
+                $('<span/>')
+                    .addClass('badge')
+                    .text($self.next().children().children().length)
+                    .appendTo($self);
+            });
         });
 
     $search.keyup(function (e) {
