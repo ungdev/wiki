@@ -34,10 +34,9 @@ module.exports = {
             log.debug('r.db(wiki).table(articles).get(' + uid + ')');
             r.db('wiki').table('articles')
                 .get(uid)
-                .filter(r.row('deletedAt').eq(null))
                 .run(conn)
                 .then(function (article) {
-                    if (!article) {
+                    if (!article || article.deletedAt !== null) {
                         return next(new APIError(404, 'Not Found'));
                     }
 
