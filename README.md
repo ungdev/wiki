@@ -23,6 +23,7 @@ npm install -g bower
 
 ```sh
 npm install
+cd public
 bower install
 ```
 
