@@ -13,3 +13,6 @@ rethinkdb_data/
 
 # Configuration
 config.json
+
+# IDEA IDEs
+.idea/
