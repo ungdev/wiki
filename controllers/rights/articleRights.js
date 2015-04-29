@@ -30,6 +30,7 @@ module.exports = {
         log.debug('r.db(wiki).table(rights).filter(r.row(article).eq(' + uid + '))');
         r.db('wiki').table('rights')
             .filter(r.row('article').eq(uid))
+            .filter(r.row('deletedAt').eq(null))
             .run(conn)
             .then(function (articleRights) {
                 return articleRights.toArray();

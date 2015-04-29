@@ -13,6 +13,11 @@ button:focus {
     background-color: inherit;
 }
 
+/* Override disabled button background color */
+.btn.disabled, .disabled.btn-large, .btn-floating.disabled, .btn-large.disabled, .btn:disabled, .btn-large:disabled, .btn-large:disabled, .btn-floating:disabled {
+    background-color: #DFDFDF !important;
+}
+
 /* Input colors */
 .input-field label {
     color: #9e9e9e;

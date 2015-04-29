@@ -12,9 +12,24 @@
 
         <link rel="stylesheet" href="../css/main.css"/>
 
-        <link rel="stylesheet" href="../css/read.css">
+        <link rel="stylesheet" href="../css/rights.css">
     </head>
     <body class="grey-text text-darken-4">
+        <div id="addRight" class="modal">
+            <div class="modal-content">
+                <h4>Ajout d'un droit</h4>
+                <p>Veuillez saisir le nom d'utilisateur de la personne à ajouter :</p>
+                <div class="input-field">
+                    <input id="addUsername" type="text">
+                    <label for="addUsername">Nom d'utilisateur :</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat disabled" disabled>Ajouter</button>
+                <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat">Annuler</a>
+            </div>
+        </div>
+
         <main class="container read">
             <div class="row center-align">
                 <h1>Wiki UTT</h1>
@@ -51,7 +66,7 @@
                 </div>
             </div>
             <div class="row center-align">
-                <a href="#" class="btn waves-effect waves-light amber darken-2">Ajouter un droit</a>
+                <a href="#addRight" class="btn waves-effect waves-light amber darken-2 modal-trigger">Ajouter un droit</a>
             </div>
             <div class="row">
                 <table id="specificRights">
