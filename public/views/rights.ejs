@@ -20,6 +20,53 @@
                 <h1>Wiki UTT</h1>
                 <h2 id="articleTitle"></h2>
             </div>
+            <div class="row flow-text">
+                Deux méthodes vous sont disponnibles pour gérer les droits de cet article :<br>
+                Premièrement les droits par défaut : ils concernent tous les utilisateurs, sauf ceux concernés par un
+                droit spécifique.<br>
+                Deuxièment les droits spécifiques : ils sont en opposition avec les droits par défaut.<br>
+                Les droits allant dans le même sens sont inutiles.<br>
+                Par exemple vous pourriez avoir ce genre de situations : <br>
+                <ul>
+                    <li><em>Tout le monde peut voir l'article, sauf John, qui ne peut pas.</em></li>
+                    <li><em>Personne ne peut éditer l'article, sauf Jack, qui peut.</em></li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="switch col s6 center-align">
+                    <label>
+                        Non visible par défaut
+                        <input type="checkbox" id="isDefaultVisible">
+                        <span class="lever"></span>
+                        Visible par défaut
+                    </label>
+                </div>
+                <div class="switch col s6 center-align">
+                    <label>
+                        Non éditable par défaut
+                        <input type="checkbox" id="isDefaultEditable">
+                        <span class="lever"></span>
+                        Éditable par défaut
+                    </label>
+                </div>
+            </div>
+            <div class="row center-align">
+                <a href="#" class="btn waves-effect waves-light amber darken-2">Ajouter un droit</a>
+            </div>
+            <div class="row">
+                <table id="specificRights">
+                    <thead>
+                        <tr>
+                            <th>Utilisateur</th>
+                            <th class="center-align">Lecture</th>
+                            <th class="center-align">Écriture</th>
+                            <th class="center-align">Suppression</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </main>
 
         <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
