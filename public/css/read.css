@@ -1,0 +1,10 @@
+#zen {
+    padding: 0 10px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+#deleteConfirm p {
+    margin-bottom: 30px;
+}

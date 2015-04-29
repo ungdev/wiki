@@ -15,6 +15,21 @@
         <link rel="stylesheet" href="../css/read.css">
     </head>
     <body class="grey-text text-darken-4">
+        <div id="deleteConfirm" class="modal">
+            <div class="modal-content">
+                <h4>Confirmation de suppression</h4>
+                <p>Vous vous apprêtez à supprimer un article. Cette suppression est irréversible. Veuillez confirmer votre action en recopiant le nom de l'article ci-dessous :</p>
+                <div class="input-field">
+                    <input id="retypeName" type="text">
+                    <label for="retypeName">Nom de l'article</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="modal-action modal-close waves-effect waves-red btn-flat disabled" disabled>Confirmer</button>
+                <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Annuler</a>
+            </div>
+        </div>
+
         <main class="container read">
             <div class="row center-align">
                 <h1>Wiki UTT</h1>
@@ -24,6 +39,33 @@
                 <div class="col s12 target"></div>
             </div>
         </main>
+
+        <a href="#" id="zen" class="btn tooltipped blue" data-position="left" data-tooltip="Zen">
+            <i class="mdi-action-visibility"></i>
+        </a>
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large red">
+                <i class="large mdi-navigation-menu"></i>
+            </a>
+            <ul>
+                <li class="tooltipped" data-position="left" data-tooltip="Supprimer l'article">
+                    <a href="#deleteConfirm" class="btn-floating red darken-2 modal-trigger">
+                        <i class="large mdi-content-clear"></i>
+                    </a>
+                </li>
+                <li class="tooltipped" data-position="left" data-tooltip="Éditer les permissions">
+                    <a href="/rights/<%= uid %>" class="btn-floating yellow darken-2">
+                        <i class="large mdi-social-people"></i>
+                    </a>
+                </li>
+                <li class="tooltipped" data-position="left" data-tooltip="Éditer l'article">
+                    <a href="/edit/<%= uid %>" class="btn-floating blue">
+                        <i class="large mdi-editor-mode-edit"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
         <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
