@@ -85,10 +85,7 @@ r.connect(config.db)
 
             if (req.xhr) return res.status(err.status).end();
 
-            //return res.redirect(config.baseURL + '/error.html#' + err.status);
-            return res
-                .status(err.status)
-                .end();
+            return res.redirect(config.baseURL + 'error/' + err.status);
         });
 
         app.listen(config.port);

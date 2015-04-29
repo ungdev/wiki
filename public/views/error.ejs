@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wiki - Erreur</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="A simple wiki for UTT NPOs">
+
+        <link rel="stylesheet" href="../bower_components/materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="../bower_components/highlightjs/styles/solarized_dark.css"/>
+
+        <link rel="stylesheet" href="../css/main.css"/>
+    </head>
+    <body class="grey-text text-darken-4">
+        <main class="container error">
+            <div class="row center-align">
+                <h1>Wiki UTT</h1>
+                <h2>Erreur <%= status %></h2>
+            </div>
+            <div class="row">
+                <p class="flow-text">
+                    Oups ! Une erreur <%= status %> est survenue. Si ce problème est récurrent, veuillez envoyer un mail
+                    à <a href="mailto:ung@utt.fr">ung@utt.fr</a> et expliquez en détail ce qui vous est arrivé.<br>
+                    Ceci inclut l'heure, la date, le numéro de l'erreur (<%= status %>) ainsi que la façon dont vous
+                    êtes arrivé ici.<br>
+                    <a href="/">Retour à l'accueil</a>
+                </p>
+            </div>
+        </main>
+
+        <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
+    </body>
+</html>
