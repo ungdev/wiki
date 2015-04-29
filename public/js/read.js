@@ -74,8 +74,7 @@
             })
             .fail(function (res) {
                 location.href = '/error/' + res.status;
-            })
-
+            });
     });
 
     // Enable zen tooltip and modals
