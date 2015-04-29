@@ -16,4 +16,10 @@
         .fail(function (res) {
             location.href = '/error/' + res.status;
         });
+
+    // Retrieve the article rights
+    $.get('/articles/' + uid + '/rights')
+        .done(function (res) {
+            console.log(res);
+        });
 }());

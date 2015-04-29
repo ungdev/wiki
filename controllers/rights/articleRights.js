@@ -7,7 +7,7 @@ var field = form.field;
 
 module.exports = {
     method: 'get',
-    route: '/article/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/rights/',
+    route: '/articles/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/rights/',
     /**
      * This controller lists one article's rights
      * 404 error if the given uid is not in the database
@@ -31,6 +31,9 @@ module.exports = {
         r.db('wiki').table('rights')
             .filter(r.row('article').eq(uid))
             .run(conn)
+            .then(function (articleRights) {
+                return articleRights.toArray();
+            })
             .then(function (articleRights) {
                 return res
                     .status(200)
