@@ -40,6 +40,8 @@ module.exports = {
 
         req.form.updatedAt = new Date();
 
+        if (!req.form.category) delete req.form.category;
+
         log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
         r.db('wiki').table('articles')
             .get(req.params.uid)

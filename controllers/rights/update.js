@@ -9,9 +9,9 @@ module.exports = {
     method: 'put',
     route: '/rights/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
     validation: form(
-        field('isDefaultEditable').toBooleanStrict(),
-        field('isDefaultVisible').toBooleanStrict(),
-        field('category').is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
+        field('user').is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/),
+        field('view').toBooleanStrict(),
+        field('edit').toBooleanStrict()
     ),
     /**
      * This controller creates one right
@@ -39,6 +39,8 @@ module.exports = {
         if (!req.form.isValid) return next(new APIError(400, 'Bad Request', req.form.errors));
 
         req.form.updatedAt = new Date();
+
+        if (!req.form.user) delete req.form.user;
 
         log.debug('r.db(wiki).table(rights).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
         r.db('wiki').table('rights')
