@@ -7,8 +7,8 @@ module.exports = {
     route: '/',
     /**
      * This controller generates the login html and the home html
-     * @param  {object}   req  The request
-     * @param  {object}   res  The response
+     * @param  {object} req  The request
+     * @param  {object} res  The response
      */
     controller: function (req, res) {
         var app = req.app;

@@ -12,7 +12,7 @@ module.exports = {
         '/articles/'
     ],
     /**
-     * This controller list all articles, or just one
+     * This controller lists all articles, or just one
      * 404 error if the given uid is not in the database
      * 500 error if the rethinkdb request fails
      * 200 otherwise
