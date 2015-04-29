@@ -1,7 +1,8 @@
 /* Base views controller */
 
 module.exports = {
-    home:  require('./home'),
-    read:  require('./read'),
-    error: require('./error')
+    home:   require('./home'),
+    read:   require('./read'),
+    rights: require('./rights'),
+    error:  require('./error')
 };
