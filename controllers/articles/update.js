@@ -36,6 +36,10 @@ module.exports = {
         var APIError = app.locals.APIError;
         var log      = app.locals.log;
 
+        if (!req.session.connected) {
+            return next(new APIError(401, 'Unauthorized'));
+        }
+
         if (!req.form.isValid) return next(new APIError(400, 'Bad Request', req.form.errors));
 
         req.form.updatedAt = new Date();

@@ -26,6 +26,10 @@ module.exports = {
         var APIError = app.locals.APIError;
         var log      = app.locals.log;
 
+        if (!req.session.connected) {
+            return next(new APIError(401, 'Unauthorized'));
+        }
+
         var deleter = { deletedAt: new Date() };
 
         log.debug('r.db(wiki).table(rights).get(' + req.params.uid + ').update(' + JSON.stringify(deleter) + ')');

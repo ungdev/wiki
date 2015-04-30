@@ -25,6 +25,10 @@ module.exports = {
         var APIError = app.locals.APIError;
         var log      = app.locals.log;
 
+        if (!req.session.connected) {
+            return next(new APIError(401, 'Unauthorized'));
+        }
+
         var uid = req.params.uid;
 
         log.debug('r.db(wiki).table(rights).filter(r.row(article).eq(' + uid + '))');

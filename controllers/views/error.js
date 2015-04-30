@@ -11,7 +11,7 @@ module.exports = {
      * @param  {object} res  The response
      */
     controller: function (req, res) {
-        res.render('error', {
+        return res.render('error', {
             status: req.params.status
         });
     }

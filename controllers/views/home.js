@@ -7,8 +7,8 @@ module.exports = {
     route: '/',
     /**
      * This controller generates the login html and the home html
-     * @param  {object} req  The request
-     * @param  {object} res  The response
+     * @param  {object} req The request
+     * @param  {object} res The response
      */
     controller: function (req, res) {
         var app = req.app;
@@ -27,7 +27,7 @@ module.exports = {
                     return categories.toArray();
                 })
                 .then(function (categories) {
-                    res.render('index', {
+                    return res.render('index', {
                         title: 'Accueil',
                         connected: true,
                         categories: categories
@@ -37,7 +37,7 @@ module.exports = {
                     return next(new APIError(500, 'SQL Server Error', err));
                 });
         } else {
-            res.render('index', {
+            return res.render('index', {
                 title: 'Connexion',
                 connected: false
             });
