@@ -2,7 +2,7 @@
 
 'use strict';
 
-var post = require('../../lib/post');
+var post  = require('../../lib/post');
 var get_  = require('../../lib/get');
 
 module.exports = {

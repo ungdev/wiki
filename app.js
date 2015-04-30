@@ -2,10 +2,10 @@
 
 'use strict';
 
+var r          = require('rethinkdb');
 var express    = require('express');
 var session    = require('express-session');
 var bodyParser = require('body-parser');
-var r          = require('rethinkdb');
 var morgan     = require('morgan');
 
 var app         = express();
@@ -32,7 +32,6 @@ r.connect(config.db)
         log.info('Connected to databse');
         app.locals.log      = log;
         app.locals.conn     = conn;
-        app.locals.r        = r;
         app.locals.config   = config;
         app.locals.APIError = APIError;
     })

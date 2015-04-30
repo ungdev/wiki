@@ -2,6 +2,7 @@
 
 'use strict';
 
+var r     = require('rethinkdb');
 var form  = require('express-form');
 var field = form.field;
 
@@ -33,7 +34,6 @@ module.exports = {
     controller: function (req, res, next) {
         var app      = req.app;
 
-        var r        = app.locals.r;
         var conn     = app.locals.conn;
         var APIError = app.locals.APIError;
         var log      = app.locals.log;

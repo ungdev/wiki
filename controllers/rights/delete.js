@@ -2,6 +2,7 @@
 
 'use strict';
 
+var r     = require('rethinkdb');
 var form  = require('express-form');
 var field = form.field;
 

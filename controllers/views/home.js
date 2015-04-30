@@ -2,6 +2,8 @@
 
 'use strict';
 
+var r = require('rethinkdb');
+
 module.exports = {
     method: 'get',
     route: '/',
@@ -14,7 +16,6 @@ module.exports = {
         var app = req.app;
 
         if (req.session.connected) {
-            var r        = app.locals.r;
             var conn     = app.locals.conn;
             var APIError = app.locals.APIError;
             var log      = app.locals.log;
