@@ -74,10 +74,15 @@ r.connect(config.db)
         // Error handling
         // Keep the four arguments even if next is unused. The number of arguments is checked
         app.use(function (err, req, res, next) {
+            if (!(err instanceof APIError)) {
+                log.error('Unknown error');
+                err = new APIError(500, 'Internal Server Error', err);
+            }
+
             if (err.status !== 404) {
                 log.error(err.status + ' on ' + req.originalUrl);
                 if (config.log.verbose && err.additionnal) console.log(err.additionnal);
-                if (config.log.stack) console.trace(err.stack);
+                if (config.log.stack) console.trace();
             } else {
                 log.warn('404 on ' + req.originalUrl);
             }
