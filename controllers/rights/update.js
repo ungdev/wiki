@@ -37,9 +37,7 @@ module.exports = {
         var conn = app.locals.conn;
         var log  = app.locals.log;
 
-        if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized', 'Not connected'));
-        }
+        if (!req.session.connected) return next(new APIError(401, 'Unauthorized', 'Not connected'));
 
         can(app)
             .editRight(req.session.userData.id, req.params.uid)

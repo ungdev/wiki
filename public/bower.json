@@ -22,6 +22,7 @@
     "fuzzy": "~0.1.0",
     "marked": "~0.3.3",
     "highlightjs": "~8.5.0",
-    "katex-build": "~0.3.0"
+    "katex-build": "~0.3.0",
+    "codemirror": "~5.2.0"
   }
 }

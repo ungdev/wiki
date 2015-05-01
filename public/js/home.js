@@ -62,7 +62,7 @@
 
         var $articles = $('li .collection-item').toArray();
 
-        $searchTarget.slideUp(function () {
+        $searchTarget.slideUp('fast', function () {
             $searchTarget.empty();
 
             $articles
@@ -108,7 +108,7 @@
             if (search.length > 0) {
                 if ($searchTarget.children().length > 0) {
                     $search.removeClass('invalid').addClass('valid');
-                    $searchTarget.slideDown();
+                    $searchTarget.slideDown('fast');
                 } else {
                     $search.removeClass('valid').addClass('invalid');
                 }

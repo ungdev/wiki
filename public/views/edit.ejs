@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wiki</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="A simple wiki for UTT NPOs">
+
+        <link rel="stylesheet" href="../bower_components/materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="../bower_components/highlightjs/styles/solarized_dark.css"/>
+        <link rel="stylesheet" href="../bower_components/katex-build/katex.min.css"/>
+        <link rel="stylesheet" href="../bower_components/codemirror/lib/codemirror.css"/>
+        <link rel="stylesheet" href="../bower_components/codemirror/addon/dialog/dialog.css"/>
+        <link rel="stylesheet" href="../bower_components/codemirror/addon/fold/foldgutter.css"/>
+
+        <link rel="stylesheet" href="../css/main.css"/>
+
+        <link rel="stylesheet" href="../css/edit.css">
+    </head>
+    <body class="grey-text text-darken-4">
+        <main class="edit">
+            <div class="row center-align">
+                <h1>
+                    <a href="/">Wiki UTT</a>
+                </h1>
+                <h2 id="articleTitle"></h2>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <textarea class="target"></textarea>
+                </div>
+            </div>
+        </main>
+
+        <a href="#" id="zen" class="btn tooltipped blue" data-position="left" data-tooltip="Zen">
+            <i class="mdi-action-visibility"></i>
+        </a>
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large green tooltipped" data-position="left" data-tooltip="Créer l'article">
+                <i class="large mdi-action-done"></i>
+            </a>
+        </div>
+
+        <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
+        <script defer src="../bower_components/highlightjs/highlight.pack.js"></script>
+        <script defer src="../bower_components/marked/marked.min.js"></script>
+        <script defer src="../bower_components/katex-build/katex.min.js"></script>
+        <script defer src="../bower_components/katex-build/contrib/auto-render.min.js"></script>
+
+        <script defer src="../bower_components/codemirror/lib/codemirror.js"></script>
+        <script defer src="../bower_components/codemirror/addon/mode/overlay.js"></script>
+        <script defer src="../bower_components/codemirror/addon/mode/simple.js"></script>
+
+        <script defer src="../bower_components/codemirror/mode/clike/clike.js"></script>
+        <script defer src="../bower_components/codemirror/mode/cmake/cmake.js"></script>
+        <script defer src="../bower_components/codemirror/mode/css/css.js"></script>
+        <script defer src="../bower_components/codemirror/mode/diff/diff.js"></script>
+        <script defer src="../bower_components/codemirror/mode/dockerfile/dockerfile.js"></script>
+        <script defer src="../bower_components/codemirror/mode/gfm/gfm.js"></script>
+        <script defer src="../bower_components/codemirror/mode/go/go.js"></script>
+        <script defer src="../bower_components/codemirror/mode/haxe/haxe.js"></script>
+        <script defer src="../bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script defer src="../bower_components/codemirror/mode/xml/xml.js"></script>
+        <script defer src="../bower_components/codemirror/mode/http/http.js"></script>
+        <script defer src="../bower_components/codemirror/mode/javascript/javascript.js"></script>
+        <script defer src="../bower_components/codemirror/mode/markdown/markdown.js"></script>
+        <script defer src="../bower_components/codemirror/mode/nginx/nginx.js"></script>
+        <script defer src="../bower_components/codemirror/mode/pascal/pascal.js"></script>
+        <script defer src="../bower_components/codemirror/mode/perl/perl.js"></script>
+        <script defer src="../bower_components/codemirror/mode/php/php.js"></script>
+        <script defer src="../bower_components/codemirror/mode/properties/properties.js"></script>
+        <script defer src="../bower_components/codemirror/mode/python/python.js"></script>
+        <script defer src="../bower_components/codemirror/mode/ruby/ruby.js"></script>
+        <script defer src="../bower_components/codemirror/mode/shell/shell.js"></script>
+        <script defer src="../bower_components/codemirror/mode/sql/sql.js"></script>
+        <script defer src="../bower_components/codemirror/mode/vb/vb.js"></script>
+        <script defer src="../bower_components/codemirror/mode/vbscript/vbscript.js"></script>
+
+        <script defer src="../bower_components/codemirror/addon/dialog/dialog.js"></script>
+        <script defer src="../bower_components/codemirror/addon/search/searchcursor.js"></script>
+        <script defer src="../bower_components/codemirror/addon/search/search.js"></script>
+        <script defer src="../bower_components/codemirror/addon/edit/closebrackets.js"></script>
+        <script defer src="../bower_components/codemirror/addon/edit/trailingspace.js"></script>
+        <script defer src="../bower_components/codemirror/addon/edit/closetag.js"></script>
+        <script defer src="../bower_components/codemirror/addon/selection/active-line.js"></script>
+        <script defer src="../bower_components/codemirror/mode/meta.js"></script>
+
+        <script defer src="../js/edit.js"></script>
+    </body>
+</html>

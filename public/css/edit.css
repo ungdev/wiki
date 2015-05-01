@@ -1,0 +1,36 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: calc(100% - 40px);
+}
+
+.edit {
+    height: 100%;
+}
+
+.edit > :last-child {
+    height: calc(100% - 200px);
+    width: 100%;
+}
+
+.edit > :last-child > .s12 {
+    height: 100%;
+}
+
+#zen {
+    padding: 0 10px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: 100%;
+}
+
+.cm-trailingspace {
+    border-bottom: 1px solid limegreen;
+}
