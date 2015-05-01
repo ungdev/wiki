@@ -37,9 +37,17 @@
             // Add number of articles to category
             $('.collapsible-header').each(function () {
                 var $self = $(this);
+                var total = $self.next().children().children().length;
+
+                if (total === 0) {
+                    $('<p/>')
+                        .text('Aucun article dans cette catégorie n\'existe , ou aucun ne vous est accessible.')
+                        .appendTo($self.next().empty());
+                }
+
                 $('<span/>')
                     .addClass('badge')
-                    .text($self.next().children().children().length)
+                    .text(total)
                     .appendTo($self);
             });
         });
@@ -115,7 +123,6 @@
         if (e.keyCode === 13) {
             location.href = $searchTarget.find('.active').attr('href');
             e.stopImmediatePropagation();
-            return;
         }
         if (e.keyCode === 38) {
             var $prev = $searchTarget.find('.active').prev();
@@ -123,7 +130,6 @@
                 $prev.addClass('active').next().removeClass('active');
             }
             e.stopImmediatePropagation();
-            return;
         }
         if (e.keyCode === 40) {
             var $next = $searchTarget.find('.active').next();
@@ -131,7 +137,6 @@
                 $next.addClass('active').prev().removeClass('active');
             }
             e.stopImmediatePropagation();
-            return;
         }
     });
 }());
