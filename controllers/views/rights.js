@@ -2,6 +2,9 @@
 
 'use strict';
 
+var can      = require('../../lib/can');
+var APIError = require('../../lib/APIError');
+
 module.exports = {
     method: 'get',
     route: '/editRights/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
@@ -17,11 +20,20 @@ module.exports = {
         var APIError = app.locals.APIError;
 
         if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized'));
+            return next(new APIError(401, 'Unauthorized', 'Not connected'));
         }
 
-        return res.render('rights', {
-            uid: req.params.uid
-        });
+        can(app)
+            .edit(req.session.userData.id, req.params.uid)
+            .then(function (canEdit) {
+                if (!canEdit) return next(new APIError(401, 'Unauthorized', 'No right to edit'));
+
+                return res.render('rights', {
+                    uid: req.params.uid
+                });
+            })
+            .catch(function (err) {
+                return next(new APIError(500, 'SQL Server Error', err));
+            });
     }
 };

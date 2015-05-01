@@ -6,6 +6,9 @@ var r     = require('rethinkdb');
 var form  = require('express-form');
 var field = form.field;
 
+var can      = require('../../lib/can');
+var APIError = require('../../lib/APIError');
+
 module.exports = {
     method: 'post',
     route: '/rights/',
@@ -31,34 +34,40 @@ module.exports = {
      * @param  {Function} next The next middleware
      */
     controller: function (req, res, next) {
-        var app      = req.app;
-
-        var conn     = app.locals.conn;
-        var APIError = app.locals.APIError;
-        var log      = app.locals.log;
+        var app  = req.app;
+        var conn = app.locals.conn;
+        var log  = app.locals.log;
 
         if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized'));
+            return next(new APIError(401, 'Unauthorized', 'Not connected'));
         }
 
         if (!req.form.isValid) {
             next(new APIError(400, 'Bad Request', req.form.errors));
             return;
         }
+        can(app)
+            .edit(req.session.userData.id, req.form.article)
+            .then(function (canEdit) {
+                if (!canEdit) return next(new APIError(401, 'Unauthorized', 'No right to edit'));
 
-        req.form.createdAt = new Date();
-        req.form.updatedAt = new Date();
-        req.form.deletedAt = null;
+                req.form.createdAt = new Date();
+                req.form.updatedAt = new Date();
+                req.form.deletedAt = null;
 
-        log.debug('r.db(wiki).table(rights).insert(' + JSON.stringify(req.form) + ')');
-        r.db('wiki').table('rights')
-            .insert(req.form)
-            .run(conn)
-            .then(function (result) {
-                return res
-                    .status(200)
-                    .json(result.generated_keys)
-                    .end();
+                log.debug('r.db(wiki).table(rights).insert(' + JSON.stringify(req.form) + ')');
+                r.db('wiki').table('rights')
+                    .insert(req.form)
+                    .run(conn)
+                    .then(function (result) {
+                        return res
+                            .status(200)
+                            .json(result.generated_keys)
+                            .end();
+                    })
+                    .catch(function (err) {
+                        return next(new APIError(500, 'SQL Server Error', err));
+                    });
             })
             .catch(function (err) {
                 return next(new APIError(500, 'SQL Server Error', err));

@@ -6,6 +6,9 @@ var r     = require('rethinkdb');
 var form  = require('express-form');
 var field = form.field;
 
+var can      = require('../../lib/can');
+var APIError = require('../../lib/APIError');
+
 module.exports = {
     method: 'get',
     route: [
@@ -22,34 +25,41 @@ module.exports = {
      * @param  {Function} next The next middleware
      */
     controller: function (req, res, next) {
-        var app      = req.app;
-
-        var conn     = app.locals.conn;
-        var APIError = app.locals.APIError;
-        var log      = app.locals.log;
+        var app  = req.app;
+        var conn = app.locals.conn;
+        var log  = app.locals.log;
 
         if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized'));
+            return next(new APIError(401, 'Unauthorized', 'Not connected'));
         }
 
         var uid = req.params.uid;
 
         if (uid) {
-            log.debug('r.db(wiki).table(rights).get(' + uid + ')');
-            r.db('wiki').table('rights')
-                .get(uid)
-                .run(conn)
-                .then(function (right) {
-                    if (!right || right.deletedAt !== null) {
-                        return next(new APIError(404, 'Not Found'));
-                    }
+            can(app)
+                .editRight(req.session.userData.id, uid)
+                .then(function (canView) {
+                    if (!canView) return next(new APIError(401, 'Unauthorized', 'No right to view'));
 
-                    return res
-                        .status(200)
-                        .json(right)
-                        .end();
+                    log.debug('r.db(wiki).table(rights).get(' + uid + ')');
+                    r.db('wiki').table('rights')
+                        .get(uid)
+                        .run(conn)
+                        .then(function (right) {
+                            if (!right || right.deletedAt !== null) {
+                                return next(new APIError(404, 'Not Found'));
+                            }
+
+                            return res
+                                .status(200)
+                                .json(right)
+                                .end();
+                        })
+                        .catch(function (err) {
+                            return next(new APIError(500, 'SQL Server Error', err));
+                        });
                 })
-                .catch(function (err) {
+                .catch(function (err) {
                     return next(new APIError(500, 'SQL Server Error', err));
                 });
         } else {
@@ -61,10 +71,25 @@ module.exports = {
                     return rights.toArray();
                 })
                 .then(function (rights) {
-                    return res
-                        .status(200)
-                        .json(rights)
-                        .end();
+                    var rightsAllowed = [];
+
+                    rights.forEach(function (right, i) {
+                        can(app)
+                            .editRight(req.session.userData.id, right.id)
+                            .then(function (canView) {
+                                if (canView) rightsAllowed.push(right);
+
+                                if (i === rights.length - 1) {
+                                    return res
+                                        .status(200)
+                                        .json(rightsAllowed)
+                                        .end();
+                                }
+                            })
+                            .catch(function (err) {
+                                return next(new APIError(500, 'SQL Server Error', err));
+                            });
+                    });
                 })
                 .catch(function (err) {
                     return next(new APIError(500, 'SQL Server Error', err));

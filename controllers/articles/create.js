@@ -6,6 +6,8 @@ var r     = require('rethinkdb');
 var form  = require('express-form');
 var field = form.field;
 
+var APIError = require('../../lib/APIError');
+
 module.exports = {
     method: 'post',
     route: '/articles/',
@@ -32,11 +34,9 @@ module.exports = {
      * @param  {Function} next The next middleware
      */
     controller: function (req, res, next) {
-        var app      = req.app;
-
-        var conn     = app.locals.conn;
-        var APIError = app.locals.APIError;
-        var log      = app.locals.log;
+        var app  = req.app;
+        var conn = app.locals.conn;
+        var log  = app.locals.log;
 
         if (!req.session.connected) {
             return next(new APIError(401, 'Unauthorized'));
