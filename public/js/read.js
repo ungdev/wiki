@@ -32,6 +32,9 @@
 
             // Fix https://github.com/chjj/marked/issues/255
             $('pre code').addClass('hljs');
+
+            // KateX
+            renderMathInElement($target[0]);
         })
         .fail(function (res) {
             location.href = '/error/' + res.status;
