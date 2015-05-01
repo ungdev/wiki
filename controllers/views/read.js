@@ -2,6 +2,7 @@
 
 'use strict';
 
+var can      = require('../../lib/can');
 var APIError = require('../../lib/APIError');
 
 module.exports = {
