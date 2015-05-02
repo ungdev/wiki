@@ -15,6 +15,7 @@ module.exports = {
     validation: form(
         field('isDefaultEditable').toBooleanStrict(),
         field('isDefaultVisible').toBooleanStrict(),
+        field('content'),
         field('category').is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
     ),
     /**
@@ -51,6 +52,7 @@ module.exports = {
                 req.form.updatedAt = new Date();
 
                 if (!req.form.category) delete req.form.category;
+                if (!req.form.content)  delete req.form.content;
 
                 log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
                 r.db('wiki').table('articles')
