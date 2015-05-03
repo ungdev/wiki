@@ -13,8 +13,20 @@ module.exports = {
     method: 'put',
     route: '/articles/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
     validation: form(
-        field('isDefaultEditable').toBooleanStrict(),
-        field('isDefaultVisible').toBooleanStrict(),
+        field('isDefaultEditable').custom(function (value) {
+            if (value === undefined || value === '') {
+                return;
+            }
+
+            return value === 'true';
+        }),
+        field('isDefaultVisible').custom(function (value) {
+            if (value === undefined || value === '') {
+                return;
+            }
+
+            return value === 'true';
+        }),
         field('content'),
         field('category').is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
     ),
@@ -53,6 +65,9 @@ module.exports = {
 
                 if (!req.form.category) delete req.form.category;
                 if (!req.form.content)  delete req.form.content;
+
+                if (req.form.isDefaultVisible === '')  delete req.form.isDefaultVisible;
+                if (req.form.isDefaultEditable === '') delete req.form.isDefaultEditable;
 
                 log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
                 r.db('wiki').table('articles')
