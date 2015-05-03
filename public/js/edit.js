@@ -15,7 +15,8 @@
     var editor;
 
     // Retrieve the article
-    $.get('/articles/' + uid)
+    $
+        .get('/articles/' + uid)
         .done(function (res) {
 
             $title.append(' - ' + res.title);
