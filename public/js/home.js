@@ -3,9 +3,15 @@
 (function () {
     'use strict';
 
-    var $search = $('#search');
+    var $search       = $('#search');
     var $searchTarget = $('#searchResults').hide();
-    var prevValue = '';
+    var $title        = $('#title');
+    var $category     = $('#category');
+    var $isDefaultVi  = $('#isDefaultVisible');
+    var $isDefaultEd  = $('#isDefaultEditable');
+    var $submitCreate = $('.modal-footer > button');
+    var prevValue     = '';
+    var titleReg      = /^[\S ]{4,}$/i;
 
     // Get all the articles
     $.get('/articles/')
@@ -119,10 +125,12 @@
     });
 
     $search.keydown(function (e) {
-        console.log(e.keyCode);
         if (e.keyCode === 13) {
-            location.href = $searchTarget.find('.active').attr('href');
-            e.stopImmediatePropagation();
+            var $active = $searchTarget.find('.active');
+            if ($active.length > 0) {
+                e.stopImmediatePropagation();
+                location.href = $searchTarget.find('.active').attr('href');
+            }
         }
         if (e.keyCode === 38) {
             var $prev = $searchTarget.find('.active').prev();
@@ -139,4 +147,47 @@
             e.stopImmediatePropagation();
         }
     });
+
+    $title.keyup(function () {
+        var val = $title.val();
+        if (!titleReg.test(val)) {
+            $title.removeClass('valid').addClass('invalid');
+            $submitCreate.addClass('disabled').attr('disabled', '');
+        } else {
+            $title.removeClass('invalid').addClass('valid');
+            $submitCreate.removeClass('disabled').removeAttr('disabled');
+        }
+
+        if (val === '') {
+            $title.removeClass('invalid').removeClass('valid');
+            $submitCreate.addClass('disabled').attr('disabled', '');
+        }
+    });
+
+    $submitCreate.click(function () {
+        var article = {
+            title: $title.val(),
+            category: $category.val(),
+            isDefaultVisible: $isDefaultVi.prop('checked'),
+            isDefaultEditable: $isDefaultEd.prop('checked')
+        };
+
+        $
+            .ajax({
+                type: 'post',
+                url: '/articles/',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(article)
+            })
+            .done(function (res) {
+                debugger;
+                location.href = '/edit/' + res[0];
+            })
+            .fail(function (res) {
+                location.href = '/error/' + res.status;
+            });
+    });
+
+    $('select').material_select();
+    $('.modal-trigger').leanModal();
 }());

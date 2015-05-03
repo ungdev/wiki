@@ -2,6 +2,28 @@
     padding-top: 50px;
 }
 
+/* Modal */
+
+#createArticle {
+    min-height: 350px;
+    overflow: visible;
+}
+
+#createArticle .modal-content {
+    overflow: visible;
+    z-index: 4000;
+}
+
+#createArticle .dropdown-content {
+    z-index: 100;
+}
+
+#createArticle .dropdown-content li {
+    line-height: 0.75rem;
+}
+
+/* Search results */
+
 .home li .collection {
     border: none;
     margin: 0.5rem 0;

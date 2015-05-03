@@ -18,6 +18,50 @@
         <% } %>
     </head>
     <body class="grey-text text-darken-4">
+
+        <% if (connected) { %>
+            <div id="createArticle" class="modal">
+                <div class="modal-content">
+                    <h4>Création d'un article</h4>
+                    <p>Veuillez indiquer le titre de l'article :</p>
+                    <div class="input-field">
+                        <input id="title" type="text" autocomplete="off">
+                        <label for="title">Titre de l'article</label>
+                    </div>
+                    <p>Veuillez indiquer la catégorie de l'article :</p>
+                    <div class="input-field">
+                        <select id="category">
+                            <% categories.forEach(function (category) { %>
+                                <option value="<%= category.id %>"><%= category.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="switch col s6 center-align">
+                            <label>
+                                Non visible par défaut
+                                <input type="checkbox" id="isDefaultVisible" checked>
+                                <span class="lever"></span>
+                                Visible par défaut
+                            </label>
+                        </div>
+                        <div class="switch col s6 center-align">
+                            <label>
+                                Non éditable par défaut
+                                <input type="checkbox" id="isDefaultEditable" checked>
+                                <span class="lever"></span>
+                                Éditable par défaut
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat disabled" disabled>Confirmer</button>
+                    <a href="#" class="modal-action modal-close waves-effect waves-orange btn-flat">Annuler</a>
+                </div>
+            </div>
+        <% } %>
+
         <main class="container login home">
             <div class="row center-align">
                 <h1>Wiki UTT</h1>
@@ -56,6 +100,15 @@
                 </ul>
             <% } %>
         </main>
+
+        <% if (connected) { %>
+            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                <a class="btn-floating btn-large green lighten tooltipped modal-trigger" data-position="left"
+                   data-tooltip="Créer un article" data-target="createArticle">
+                    <i class="large mdi-editor-mode-edit"></i>
+                </a>
+            </div>
+        <% } %>
 
         <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
