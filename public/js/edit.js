@@ -19,7 +19,7 @@
         .done(function (res) {
 
             $title.append(' - ' + res.title);
-            $articleTitle.html('<a href="/read/' + res.id + '">' + res.title + ' - Droits</a>');
+            $articleTitle.html('<a href="/read/' + res.id + '">' + res.title + '</a> - Édition');
 
             $target.val(res.content);
 

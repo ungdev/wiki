@@ -25,7 +25,7 @@
             article = res;
 
             $title.append(' - ' + res.title + ' - Droits');
-            $articleTitle.html('<a href="/read/' + res.id + '">' + res.title + ' - Droits</a>');
+            $articleTitle.html('<a href="/read/' + res.id + '">' + res.title + '</a> - Droits');
             if (res.isDefaultVisible)  $isDefaultVisible .prop('checked', true);
             if (res.isDefaultEditable) $isDefaultEditable.prop('checked', true);
         })
