@@ -1,3 +1,11 @@
 #addRight p {
     margin-bottom: 30px;
 }
+
+#specificRights tbody em {
+    margin-left: 10px;
+}
+
+#specificRights tbody em small {
+    vertical-align: middle;
+}

@@ -51,14 +51,35 @@ module.exports = {
         req.form.updatedAt = new Date();
         req.form.deletedAt = null;
 
+        var generated_keys;
+
         log.debug('r.db(wiki).table(articles).insert(' + JSON.stringify(req.form) + ')');
         r.db('wiki').table('articles')
             .insert(req.form)
             .run(conn)
             .then(function (result) {
+                generated_keys = result.generated_keys;
+
+                var initialRight = {
+                    article: generated_keys[0],
+                    createdAt: new Date(),
+                    deletedAt: null,
+                    edit: true,
+                    frozen: true,
+                    updatedAt: new Date(),
+                    user: req.session.userData.id,
+                    view: true
+                };
+
+                log.debug('r.db(wiki).table(rights).insert(' + JSON.stringify(initialRight) + ')');
+                return r.db('wiki').table('rights')
+                    .insert(initialRight)
+                    .run(conn);
+            })
+            .then(function () {
                 return res
                     .status(200)
-                    .json(result.generated_keys)
+                    .json(generated_keys)
                     .end();
             })
             .catch(function (err) {

@@ -124,7 +124,7 @@
         var $tr           = $('<tr/>').appendTo($tbody);
 
         // Username
-        $('<td/>').text(right.user).appendTo($tr);
+        var $tdUsername = $('<td/>').text(right.user).appendTo($tr);
 
         // View
         var $tdView       = $('<td class="center-align"/>').appendTo($tr);
@@ -144,7 +144,7 @@
 
         // Delete
         var $tdDelete = $('<td class="center-align"/>').appendTo($tr);
-        $('<a class="btn red waves-effect waves-light">Supprimer</a>')
+        var $aDelete  = $('<button class="btn red waves-effect waves-light">Supprimer</button>')
             .appendTo($tdDelete)
             .click(function (e) {
                 e.preventDefault();
@@ -152,6 +152,13 @@
                     $tr.remove();
                 });
             });
+
+        if (right.frozen) {
+            $tdUsername.append('<em class="grey-text"><small>(Droit immutable d\'auteur)</small></em>');
+            $inputEdit.prop('disabled', true);
+            $inputView.prop('disabled', true);
+            $aDelete.addClass('deleted').attr('disabled', '');
+        }
     }
 
     // Enable zen tooltip and modals
