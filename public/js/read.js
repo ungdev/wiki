@@ -21,6 +21,8 @@
             $retypeName.attr('placeholder', res.title);
             $retypeName.next().addClass('active');
 
+            if (!res.content) res.content = '*Aucun contenu pour le moment. Vous pouvez éditer cet article via le menu.*';
+
             var html = marked(res.content, {
                 breaks: true,
                 sanitize: true,
