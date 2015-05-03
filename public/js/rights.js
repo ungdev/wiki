@@ -20,7 +20,8 @@
     var rights = [];
 
     // Retrieve the article
-    $.get('/articles/' + uid)
+    $
+        .get('/articles/' + uid)
         .done(function (res) {
             article = res;
 
@@ -34,7 +35,8 @@
         });
 
     // Retrieve the article rights
-    $.get('/articles/' + uid + '/rights')
+    $
+        .get('/articles/' + uid + '/rights')
         .done(function (res) {
             rights = res;
 
@@ -63,7 +65,6 @@
 
         // Delete initial rights
         rights.forEach(function (right) {
-            console.log(right);
             promises.push($.ajax({
                 url: '/rights/' + right.id,
                 type: 'delete'
@@ -85,7 +86,9 @@
             }));
         });
 
-        $.when.apply($, promises)
+        // Equivalent to Promises.all(promises)
+        $.when
+            .apply($, promises)
             .done(function () {
                 Materialize.toast('Droits sauvegardés !', 4000);
             })
@@ -124,24 +127,25 @@
         $('<td/>').text(right.user).appendTo($tr);
 
         // View
-        var $tdView       = $('<td/>').addClass('center-align').appendTo($tr);
+        var $tdView       = $('<td class="center-align"/>').appendTo($tr);
         var $spanView     = $('<span/>').appendTo($tdView);
-        var $inputView    = $('<input type="checkbox"/>').attr('id', 'view-' + right.id).appendTo($spanView);
-        $('<label/>').attr('for', 'view-' + right.id).text('Activé').appendTo($spanView);
+        var $inputView    = $('<input type="checkbox" id="view-' + right.id +'"/>').appendTo($spanView);
+        $('<label for="view-' + right.id + '">Activé</label>').appendTo($spanView);
 
         if (right.view) $inputView.prop('checked', true);
 
         // Edit
-        var $tdEdit    = $('<td/>').addClass('center-align').appendTo($tr);
+        var $tdEdit    = $('<td class="center-align"/>').appendTo($tr);
         var $spanEdit  = $('<span/>').appendTo($tdEdit);
-        var $inputEdit = $('<input type="checkbox">').attr('id', 'edit-' + right.id).appendTo($spanEdit);
-        $('<label/>').attr('for', 'edit-' + right.id).text('Activé').appendTo($spanEdit);
+        var $inputEdit = $('<input type="checkbox" id="edit-' + right.id + '">').appendTo($spanEdit);
+        $('<label for="edit-' + right.id + '">Activé</label>').appendTo($spanEdit);
 
         if (right.edit) $inputEdit.prop('checked', true);
 
         // Delete
-        var $tdDelete = $('<td/>').addClass('center-align').appendTo($tr);
-        $('<a/>').addClass('btn red waves-effect waves-light').text('Supprimer').appendTo($tdDelete)
+        var $tdDelete = $('<td class="center-align"/>').appendTo($tr);
+        $('<a class="btn red waves-effect waves-light">Supprimer</a>')
+            .appendTo($tdDelete)
             .click(function (e) {
                 e.preventDefault();
                 $tr.fadeOut(function () {
