@@ -1,0 +1,30 @@
+html {
+    height: 100%;
+}
+
+main {
+    height: 100%;
+}
+
+main .row:last-child {
+    height: calc(100% - 205px);
+}
+
+main > .row:last-child > .col {
+    max-height: 100%;
+    overflow: auto;
+}
+
+main > .row:last-child > .col:last-child {
+    height: 100%;
+    overflow: auto;
+}
+
+.target.col {
+    padding: 0;
+}
+
+#restore {
+    display: block;
+    margin: 20px 0 0 0;
+}

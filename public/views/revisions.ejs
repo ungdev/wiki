@@ -13,25 +13,10 @@
 
         <link rel="stylesheet" href="../css/main.css"/>
 
-        <link rel="stylesheet" href="../css/read.css">
+        <link rel="stylesheet" href="../css/revisions.css">
     </head>
     <body class="grey-text text-darken-4">
-        <div id="deleteConfirm" class="modal">
-            <div class="modal-content">
-                <h4>Confirmation de suppression</h4>
-                <p>Vous vous apprêtez à supprimer un article. Cette suppression est irréversible. Veuillez confirmer votre action en recopiant le nom de l'article ci-dessous :</p>
-                <div class="input-field">
-                    <input id="retypeName" type="text">
-                    <label for="retypeName">Nom de l'article</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="modal-action modal-close waves-effect waves-red btn-flat disabled" disabled>Confirmer</button>
-                <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Annuler</a>
-            </div>
-        </div>
-
-        <main class="container revisions">
+        <main class="revisions">
             <div class="row center-align">
                 <h1>
                     <a href="/">Wiki UTT</a>
@@ -39,9 +24,9 @@
                 <h2 id="articleTitle"></h2>
             </div>
             <div class="row">
-                <div class="col s12">
-                    <div class="collection target">
-                    </div>
+                <div class="col s12 row">
+                    <div class="collection target col s6"></div>
+                    <div class="preview col s6"></div>
                 </div>
             </div>
         </main>

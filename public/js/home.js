@@ -56,6 +56,9 @@
                     .text(total)
                     .appendTo($self);
             });
+        })
+        .fail(function (res) {
+            location.href = '/error/' + res.status;
         });
 
     $search.keyup(function (e) {
@@ -180,7 +183,6 @@
                 data: JSON.stringify(article)
             })
             .done(function (res) {
-                debugger;
                 location.href = '/edit/' + res[0];
             })
             .fail(function (res) {

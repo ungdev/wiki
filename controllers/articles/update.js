@@ -62,6 +62,7 @@ module.exports = {
                 if (!req.form.isValid) return next(new APIError(400, 'Bad Request', req.form.errors));
 
                 req.form.updatedAt = new Date();
+                req.form.lastAuthorName = req.session.userData.firstName + ' ' + req.session.userData.lastName;
 
                 if (!req.form.category) delete req.form.category;
                 if (!req.form.content)  delete req.form.content;

@@ -72,6 +72,12 @@ module.exports = {
                 })
                 .then(function (articles) {
                     var articlesAllowed = [];
+                    if (articles.length === 0) {
+                        return res
+                            .status(200)
+                            .json([])
+                            .end();
+                    }
 
                     articles.forEach(function (article, i) {
                         can(app)
