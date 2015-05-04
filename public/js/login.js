@@ -9,6 +9,9 @@
         $.get('login/getURL')
             .done(function (res) {
                 location.href = res.url;
+            })
+            .fail(function (res) {
+                location.href = '/error/' + res.status;
             });
     });
 }());
