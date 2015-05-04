@@ -47,9 +47,11 @@ module.exports = {
             return;
         }
 
-        req.form.createdAt = new Date();
-        req.form.updatedAt = new Date();
-        req.form.deletedAt = null;
+        req.form.createdAt  = new Date();
+        req.form.updatedAt  = new Date();
+        req.form.deletedAt  = null;
+        req.form.author     = req.session.userData.id;
+        req.form.authorName = req.session.userData.firstName + ' ' + req.session.userdata.lastName;
 
         var generated_keys;
 

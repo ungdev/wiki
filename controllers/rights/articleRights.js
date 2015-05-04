@@ -32,31 +32,35 @@ module.exports = {
 
         var uid = req.params.uid;
 
-        can(app)
-            .edit(req.session.userData.id, uid)
-            .then(function (canEdit) {
-                if (!canEdit) return next(new APIError(401, 'Unauthorized', 'No right to edit'));
+        if (uid) {
+            can(app)
+                .edit(req.session.userData.id, uid)
+                .then(function (canEdit) {
+                    if (!canEdit) return next(new APIError(401, 'Unauthorized', 'No right to edit'));
 
-                log.debug('r.db(wiki).table(rights).filter(r.row(article).eq(' + uid + '))');
-                r.db('wiki').table('rights')
-                    .filter(r.row('article').eq(uid))
-                    .filter(r.row('deletedAt').eq(null))
-                    .run(conn)
-                    .then(function (articleRights) {
-                        return articleRights.toArray();
-                    })
-                    .then(function (articleRights) {
-                        return res
-                            .status(200)
-                            .json(articleRights)
-                            .end();
-                    })
-                    .catch(function (err) {
-                        return next(new APIError(500, 'SQL Server Error', err));
-                    });
-            })
-            .catch(function (err) {
-                return next(new APIError(500, 'SQL Server Error', err));
-            });
+                    log.debug('r.db(wiki).table(rights).filter(r.row(article).eq(' + uid + '))');
+                    r.db('wiki').table('rights')
+                        .filter(r.row('article').eq(uid))
+                        .filter(r.row('deletedAt').eq(null))
+                        .run(conn)
+                        .then(function (articleRights) {
+                            return articleRights.toArray();
+                        })
+                        .then(function (articleRights) {
+                            return res
+                                .status(200)
+                                .json(articleRights)
+                                .end();
+                        })
+                        .catch(function (err) {
+                            return next(new APIError(500, 'SQL Server Error', err));
+                        });
+                })
+                .catch(function (err) {
+                    return next(new APIError(500, 'SQL Server Error', err));
+                });
+        } else {
+            return next(new APIError(400, 'Bad Request', 'Missing uid'));
+        }
     }
 };
