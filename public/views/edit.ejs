@@ -27,8 +27,11 @@
                 <h2 id="articleTitle"></h2>
             </div>
             <div class="row">
-                <div class="col s12">
+                <div class="col s6">
                     <textarea class="target"></textarea>
+                </div>
+                <div class="col s6">
+                    <div id="preview"></div>
                 </div>
             </div>
         </main>
@@ -37,12 +40,17 @@
             <i class="mdi-action-visibility"></i>
         </a>
 
+        <a href="#" id="modeChange" class="btn tooltipped blue" data-position="left" data-tooltip="Mode deux écrans">
+            <i class="mdi-av-pause"></i>
+        </a>
+
         <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
             <a class="btn-floating btn-large green tooltipped" data-position="left" data-tooltip="Sauvegarder l'article"
                id="editArticle">
                 <i class="large mdi-action-done"></i>
             </a>
         </div>
+
 
         <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>

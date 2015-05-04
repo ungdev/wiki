@@ -8,6 +8,14 @@ body {
             transition: all .2s ease;
 }
 
+/* hr */
+hr {
+    border-bottom: 1px solid #ccc;
+    border-top: 0;
+    margin: 0 auto;
+    width: calc(100% - 40px);
+}
+
 /* Overrides awful button background color */
 button:focus {
     background-color: inherit;

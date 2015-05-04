@@ -7,7 +7,9 @@
     var $articleTitle = $('#articleTitle');
     var $title        = $('title');
     var $target       = $('.target');
+    var $preview      = $('#preview');
     var $zen          = $('#zen');
+    var $modeChange   = $('#modeChange');
     var $bodyhtml     = $('body').add('html');
     var $editArticle  = $('#editArticle');
     var $ce;
@@ -34,6 +36,12 @@
                 theme: 'pastel-on-dark'
             });
 
+            var debouncer = 0;
+            editor.on('change', function () {
+                clearTimeout(debouncer);
+                debouncer = setTimeout(doPreview(editor), 500);
+            });
+
             $ce = $('.CodeMirror');
         })
         .fail(function (res) {
@@ -50,6 +58,7 @@
             $zen.css('opacity', 0.6);
             $zen.children().removeClass('mdi-action-visibility').addClass('mdi-action-visibility-off');
             $ce.addClass('fullscreen');
+            $modeChange.fadeOut('fast');
             $bodyhtml.css({
                 backgroundColor: '#2c2827',
                 overflow: 'hidden'
@@ -58,6 +67,7 @@
         } else {
             $zen.css('opacity', 1);
             $zen.children().removeClass('mdi-action-visibility-off').addClass('mdi-action-visibility');
+            $modeChange.fadeIn('fast');
             $ce.removeClass('fullscreen');
             $bodyhtml.removeAttr('style');
             exitFullscreen();
@@ -84,6 +94,23 @@
             });
     });
 
+    var actualMode = 1;
+    $modeChange.click(function (e) {
+        e.preventDefault();
+        ++actualMode;
+        actualMode = actualMode % 3;
+        if (actualMode === 0) {
+            $target.parent().css({ padding: '0 0.75rem', width: '100%' });
+            $preview.parent().css({ padding: '0', width: '0%' });
+        } else if (actualMode === 1) {
+            $target.parent().css({ padding: '0 0.75rem', width: '50%' });
+            $preview.parent().css({ padding: '0 0.75rem', width: '50%' });
+        } else {
+            $target.parent().css({ padding: '0', width: '0%' });
+            $preview.parent().css({ padding: '0 0.75rem', width: '100%' });
+        }
+    });
+
     /**
      * Goes fullscreen on an element
      * @param {HTMLElement} element
@@ -103,6 +130,30 @@
         else if (document.mozCancelFullScreen)  document.mozCancelFullScreen();
         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
         else if (document.msExitFullscreen)     document.msExitFullscreen();
+    }
+
+    /**
+     * Does renders the preview
+     * @param   {object}   editor CodeMirror object
+     * @returns {Function}        A function binded with the editor
+     */
+    function doPreview (editor) {
+        return function () {
+            var html = marked(editor.getValue(), {
+                breaks: true,
+                sanitize: true,
+                highlight: function (code) {
+                    return hljs.highlightAuto(code).value;
+                }
+            });
+            $preview.html(html);
+
+            // Fix https://github.com/chjj/marked/issues/255
+            $('pre code').addClass('hljs');
+
+            // KateX
+            renderMathInElement($preview[0]);
+        }
     }
 
     // Enable zen tooltip and modals
