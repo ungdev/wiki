@@ -1,4 +1,4 @@
-/* Edit the rights of an article */
+/* Revisions tool */
 
 (function () {
     'use strict';
@@ -37,36 +37,20 @@
                 });
 
                 revisions.forEach(function (revision, i) {
-                    var date      = new Date(revision.createdAt);
-                    var formatted = pad2(date.getDate()) + '/' +
-                        pad2(date.getMonth()) + '/' +
-                        pad2(date.getFullYear()) + ' - ' +
-                        pad2(date.getHours()) + ':' +
-                        pad2(date.getMinutes());
-
-                    var whoDid = (revision.length >= i + 1) ? revision[i + 1].overridenBy : article.lastAuthorName;
+                    var date = $.formatDate(revision.createdAt, true);
+                    var whoDid    = (revision.length >= i + 1) ? revision[i + 1].overridenBy : article.lastAuthorName;
 
                     if (i === 0) {
-                        date      = new Date(article.updatedAt);
-                        formatted = pad2(date.getDate()) + '/' +
-                            pad2(date.getMonth()) + '/' +
-                            pad2(date.getFullYear()) + ' - ' +
-                            pad2(date.getHours()) + ':' +
-                            pad2(date.getMinutes());
-                        $target.append('<a href="#" class="collection-item blue-text" data-index="' + (revisions.length - i) + '">Dernier article du ' + formatted + ' par ' + whoDid + '</a>');
+                        date = $.formatDate(article.updatedAt, true);
+                        $target.append('<a href="#" class="collection-item blue-text" data-index="' + (revisions.length - i) + '">Dernier article du ' + date + ' par ' + whoDid + '</a>');
                     } else {
-                        $target.append('<a href="#" class="collection-item blue-text" data-index="' + (revisions.length - i) + '">Révision du ' + formatted + ' par ' + whoDid + '</a>');
+                        $target.append('<a href="#" class="collection-item blue-text" data-index="' + (revisions.length - i) + '">Révision du ' + date + ' par ' + whoDid + '</a>');
                     }
                 });
 
-                var date      = new Date(article.createdAt);
-                var formatted = pad2(date.getDate()) + '/' +
-                    pad2(date.getMonth()) + '/' +
-                    pad2(date.getFullYear()) + ' - ' +
-                    pad2(date.getHours()) + ':' +
-                    pad2(date.getMinutes());
+                var date = $.formatDate(article.createdAt, true);
 
-                $target.append('<a href="#" class="collection-item initialVersion blue-text" data-index="0">Création par ' + article.authorName + ' (' + formatted + ')</a>');
+                $target.append('<a href="#" class="collection-item initialVersion blue-text" data-index="0">Création par ' + article.authorName + ' (' + date + ')</a>');
 
                 revisions.push({
                     content: article.content
@@ -125,8 +109,6 @@
                 location.href = '/error/' + res.status;
             });
     }
-
-    var pad2 = function (n) { return n < 10 ? '0' + n : '' + n };
 
     // Enable zen tooltip and modals
     $('.tooltipped').tooltip();

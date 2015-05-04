@@ -19,14 +19,6 @@
             res.forEach(function (article) {
                 var $target = $('#' + article.category + ' > .collapsible-body > .collection');
 
-                var date = new Date(article.updatedAt);
-
-                var pad2 = function (n) { return n < 10 ? '0' + n : '' + n };
-
-                var formatted = pad2(date.getDate()) + '/' +
-                                pad2(date.getMonth()) + '/' +
-                                pad2(date.getFullYear());
-
                 var $a = $('<a/>')
                     .addClass('collection-item')
                     .attr('href', '/read/' + article.id)
@@ -34,7 +26,7 @@
 
                 $('<span/>')
                     .addClass('badge')
-                    .text(formatted)
+                    .text($.formatDate(article.updatedAt))
                     .appendTo($a);
 
                 $a.appendTo($target);
