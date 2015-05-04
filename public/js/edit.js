@@ -63,6 +63,7 @@
                 backgroundColor: '#2c2827',
                 overflow: 'hidden'
             });
+            $preview.fadeOut('fast');
             launchIntoFullscreen(document.documentElement);
         } else {
             $zen.css('opacity', 1);
@@ -70,6 +71,7 @@
             $modeChange.fadeIn('fast');
             $ce.removeClass('fullscreen');
             $bodyhtml.removeAttr('style');
+            $preview.fadeIn('fast');
             exitFullscreen();
         }
     });
