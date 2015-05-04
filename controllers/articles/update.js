@@ -69,23 +69,58 @@ module.exports = {
                 if (req.form.isDefaultVisible === '')  delete req.form.isDefaultVisible;
                 if (req.form.isDefaultEditable === '') delete req.form.isDefaultEditable;
 
-                log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
-                r.db('wiki').table('articles')
-                    .get(req.params.uid)
-                    .update(req.form)
-                    .run(conn)
-                    .then(function (result) {
-                        if (result.skipped === 1) {
-                            return next(new APIError(404, 'Not Found', result));
-                        }
-                        return res
-                            .status(200)
-                            .json(result)
-                            .end();
-                    })
-                    .catch(function (err) {
-                        return next(new APIError(500, 'SQL Server Error', err));
-                    });
+                // Save revision
+                if (req.form.content) {
+                    log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ')(content)');
+                    r.db('wiki').table('articles')
+                        .get(req.params.uid)('content')
+                        .run(conn)
+                        .then(function (content) {
+                            var newRevision = {
+                                article: req.params.uid,
+                                content: content,
+                                createdAt: new Date(),
+                                updatedAt: new Date(),
+                                deletedAt: new Date(),
+                                overridenBy: req.session.userData.firstName + ' ' + req.session.userData.lastName
+                            };
+                            log.debug('r.db(wiki).table(revisions).insert(' + JSON.stringify(newRevision) + ')');
+                            return r.db('wiki').table('revisions')
+                                .insert(newRevision)
+                                .run(conn)
+                                .then(function () {
+                                    doUpdate();
+                                })
+                                .catch(function (err) {
+                                    return next(new APIError(500, 'SQL Server Error', err));
+                                });
+                        })
+                        .catch(function (err) {
+                            return next(new APIError(500, 'SQL Server Error', err));
+                        });
+                } else {
+                    doUpdate();
+                }
+
+                function doUpdate () {
+                    log.debug('r.db(wiki).table(articles).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
+                    r.db('wiki').table('articles')
+                        .get(req.params.uid)
+                        .update(req.form)
+                        .run(conn)
+                        .then(function (result) {
+                            if (result.skipped === 1) {
+                                return next(new APIError(404, 'Not Found', result));
+                            }
+                            return res
+                                .status(200)
+                                .json(result)
+                                .end();
+                        })
+                        .catch(function (err) {
+                            return next(new APIError(500, 'SQL Server Error', err));
+                        });
+                }
             })
             .catch(function (err) {
                 return next(new APIError(500, 'SQL Server Error', err));
