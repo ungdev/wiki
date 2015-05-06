@@ -36,6 +36,11 @@
                 theme: 'pastel-on-dark'
             });
 
+            if (localStorage.hasOwnProperty(uid)) {
+                editor.setValue(localStorage.getItem(uid));
+                Materialize.toast('Contenu restauré', 2000);
+            }
+
             var debouncer = 0;
             editor.on('change', function () {
                 clearTimeout(debouncer);
@@ -160,6 +165,13 @@
             renderMathInElement($preview[0]);
         }
     }
+
+    setTimeout(function autoSave () {
+        var value = editor.getValue();
+        localStorage.setItem(uid, value);
+        Materialize.toast('Contenu auto-sauvegardé localement', 3000);
+        setTimeout(autoSave, 60 * 1000);
+    }, 60 * 1000);
 
     // Enable zen tooltip and modals
     $('.tooltipped').tooltip();
