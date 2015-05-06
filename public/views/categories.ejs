@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Wiki</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="A simple wiki for UTT NPOs">
+
+        <link rel="stylesheet" href="../bower_components/materialize/dist/css/materialize.min.css">
+        <link rel="stylesheet" href="../bower_components/highlightjs/styles/solarized_dark.css"/>
+        <link rel="stylesheet" href="../bower_components/katex-build/katex.min.css"/>
+        <link rel="stylesheet" href="../bower_components/codemirror/lib/codemirror.css"/>
+        <link rel="stylesheet" href="../bower_components/codemirror/addon/dialog/dialog.css"/>
+        <link rel="stylesheet" href="../bower_components/codemirror/theme/pastel-on-dark.css"/>
+
+        <link rel="stylesheet" href="../css/main.css"/>
+
+        <link rel="stylesheet" href="../css/categories.css">
+    </head>
+    <body class="grey-text text-darken-4">
+        <div id="deleteConfirm" class="modal">
+            <div class="modal-content">
+                <h4>Confirmation de suppression</h4>
+                <p>
+                    Vous vous apprêtez à supprimer « <span class="category"></span> ». Cette suppression est irréversible.
+                    Choisissez d'abord une catégorie pour déplacer les articles existants.
+                    Si vous choisissez « <span class="category"></span> », les articles de « <span class="category"></span> » seront supprimés.
+                </p>
+                <div class="col s12">
+                    <select id="newCategory"></select>
+                    <label for="newCategory">Materialize Select</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="modal-action modal-close waves-effect waves-red btn-flat">Confirmer</button>
+                <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Annuler</a>
+            </div>
+        </div>
+
+        <main class="container categories">
+            <div class="row center-align">
+                <h1>
+                    <a href="/">Wiki UTT</a>
+                </h1>
+                <h2>Catégories</h2>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <ul class="collection target">
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a class="btn-floating btn-large green tooltipped" data-position="left" data-tooltip="Créer une catégorie"
+               id="createCategory">
+                <i class="large mdi-editor-mode-edit"></i>
+            </a>
+        </div>
+
+        <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
+        <script defer src="../bower_components/highlightjs/highlight.pack.js"></script>
+        <script defer src="../bower_components/marked/marked.min.js"></script>
+        <script defer src="../bower_components/katex-build/katex.min.js"></script>
+        <script defer src="../bower_components/katex-build/contrib/auto-render.min.js"></script>
+
+        <script defer src="../js/categories.js"></script>
+    </body>
+</html>

@@ -1,4 +1,5 @@
 {
+    "organization": "",
     "port": 8081,
     "secret": "",
     "log": {

@@ -57,6 +57,11 @@ module.exports = {
 
                 var getNames = orgs.map(function (org) {
                     var orgName = org._embed.organization;
+
+                    if (org.role !== 'member' && orgName === config.organization) {
+                        req.session.canEditCategories = true;
+                    }
+
                     return get_(config.etu.baseURL + 'public/orgas/' + orgName + '?access_token=' + req.session.accessToken);
                 });
 
