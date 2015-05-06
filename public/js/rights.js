@@ -38,7 +38,9 @@
     $
         .get('/articles/' + uid + '/rights')
         .done(function (res) {
-            rights = res;
+            rights = res.filter(function (right) {
+                return right.frozen !== true;
+            });
 
             res.forEach(function (right) {
                 addLine(right);
@@ -49,7 +51,7 @@
     $save.click(function () {
         if ($save.hasClass('disabled')) return;
 
-        $save.addClass('disabled');
+        $save.addClass('disabled').attr('disabled', '');
 
         var isDefaultVisible  = $isDefaultVisible .prop('checked');
         var isDefaultEditable = $isDefaultEditable.prop('checked');
@@ -74,6 +76,10 @@
         // Create the new rights
         $tbody.children().each(function () {
             var $self = $(this);
+
+            // Don't create the frozen right
+            if ($self.children().first().children().length > 0) return;
+
             var user = $self.children().first().text();
             var view = $self.children().eq(1).children().children('input').prop('checked');
             var edit = $self.children().eq(2).children().children('input').prop('checked');
@@ -91,6 +97,7 @@
             .apply($, promises)
             .done(function () {
                 Materialize.toast('Droits sauvegardés !', 4000);
+                $save.removeClass('disabled').removeAttr('disabled');
             })
             .fail(function (res) {
                 location.href = '/error/' + res.status;
