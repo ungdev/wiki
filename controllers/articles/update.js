@@ -29,7 +29,7 @@ module.exports = {
             return value === 'true';
         }),
         field('content'),
-        field('category').is(new RegExp('/^' + uid + '$/'))
+        field('category').is(new RegExp('/^' + uidReg + '$/'))
     ),
     /**
      * This controller creates one article
