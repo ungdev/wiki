@@ -53,6 +53,11 @@ r.connect(config.db)
             cookie: { maxAge: 60 * 60000 }
         }));
 
+        app.use(function (req, res, next) {
+            req.session.cookie.maxAge = false;
+            next();
+        });
+
         // EJS
         app.set('views', __dirname + '/public/views');
         app.set('view engine', 'ejs');
