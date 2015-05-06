@@ -75,9 +75,8 @@
                             var $selecter = $('<a href="#" class="btn waves-effect waves-light blue" id="restore">Restorer cette version</a>')
                                 .click(function (e) {
                                     e.preventDefault();
-                                    console.log('RESTORE');
-                                    console.log(content);
 
+                                    $selecter.addClass('disabled').attr('disabled', '');
                                     $
                                         .ajax({
                                             url: '/articles/' + uid,

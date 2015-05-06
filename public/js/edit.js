@@ -81,6 +81,8 @@
 
         var value = editor.getValue();
 
+        $editArticle.addClass('disabled').attr('disabled', '');
+
         $
             .ajax({
                 url: '/articles/' + uid,
@@ -89,6 +91,7 @@
                 data: JSON.stringify({ content: value })
             })
             .done(function () {
+                $editArticle.removeClass('disabled').removeAttr('disabled');
                 Materialize.toast('Contenu sauvegardé !', 4000);
             })
             .fail(function (res) {

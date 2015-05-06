@@ -167,6 +167,8 @@
             isDefaultEditable: $isDefaultEd.prop('checked')
         };
 
+        $submitCreate.addClass('disabled').attr('disabled', '');
+
         $
             .ajax({
                 type: 'post',

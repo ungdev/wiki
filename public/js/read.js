@@ -73,6 +73,7 @@
     });
 
     $delete.click(function () {
+        $delete.addClass('disabeld').attr('disabled', '');
         $.ajax({ url: '/articles/' + uid, type: 'DELETE' })
             .done(function () {
                 location.href = '/';
