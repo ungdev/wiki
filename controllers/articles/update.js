@@ -8,10 +8,11 @@ var field = form.field;
 
 var can      = require('../../lib/can');
 var APIError = require('../../lib/APIError');
+var uidReg   = require('../../lib/uidReg');
 
 module.exports = {
     method: 'put',
-    route: '/articles/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
+    route: '/articles/:uid(' + uidReg + ')',
     validation: form(
         field('isDefaultEditable').custom(function (value) {
             if (value === undefined || value === '') {
@@ -28,7 +29,7 @@ module.exports = {
             return value === 'true';
         }),
         field('content'),
-        field('category').is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
+        field('category').is(new RegExp('/^' + uid + '$/'))
     ),
     /**
      * This controller creates one article

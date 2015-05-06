@@ -8,11 +8,12 @@ var field = form.field;
 
 var can      = require('../../lib/can');
 var APIError = require('../../lib/APIError');
+var uidReg   = require('../../lib/uidReg');
 
 module.exports = {
     method: 'get',
     route: [
-        '/revisions/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
+        '/revisions/:uid(' + uidReg + ')',
         '/revisions/'
     ],
     /**

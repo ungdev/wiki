@@ -7,6 +7,7 @@ var form  = require('express-form');
 var field = form.field;
 
 var APIError = require('../../lib/APIError');
+var uidReg   = require('../../lib/uidReg');
 
 module.exports = {
     method: 'post',
@@ -15,7 +16,7 @@ module.exports = {
         field('title').required().is(/^[\S ]{4,}$/i),
         field('isDefaultEditable').required().toBooleanStrict(),
         field('isDefaultVisible').required().toBooleanStrict(),
-        field('category').required().is(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/)
+        field('category').required().is(new RegExp('/^' + uidReg + '$/'))
     ),
     /**
      * This controller creates one article
