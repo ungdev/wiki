@@ -1,0 +1,19 @@
+#deleteConfirm {
+    display: none;
+}
+
+#zen {
+    display: none;
+}
+
+.fixed-action-btn {
+    display: none;
+}
+
+.read > .row:first-child h1 {
+    display: none;
+}
+
+.read > .row:first-child h2 {
+    color: #000;
+}

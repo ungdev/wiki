@@ -8,3 +8,11 @@
 #deleteConfirm p {
     margin-bottom: 30px;
 }
+
+.target ul {
+    padding-left: 15px;
+}
+
+.target ul, .target ul li {
+    list-style-type: disc;
+}

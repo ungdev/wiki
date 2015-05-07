@@ -50,6 +50,14 @@ body {
     overflow: hidden;
 }
 
+#preview ul {
+    padding-left: 15px;
+}
+
+#preview ul, #preview ul li {
+    list-style-type: disc;
+}
+
 .CodeMirror {
     cursor: text;
     height: 100%;
