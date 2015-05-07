@@ -36,7 +36,7 @@
                 theme: 'pastel-on-dark'
             });
 
-            if (localStorage.hasOwnProperty(uid)) {
+            if (localStorage.hasOwnProperty(uid) && localStorage.getItem(uid) !== editor.getValue()) {
                 Materialize.toast('<span>Restaurer le contenu ?</span><a href="#" class="btn-flat yellow-text restore">Oui<a>', 4000);
                 $('.restore').one('click', function () {
                     editor.setValue(localStorage.getItem(uid));
@@ -48,6 +48,7 @@
                 clearTimeout(debouncer);
                 debouncer = setTimeout(doPreview(editor), 500);
             });
+            setTimeout(doPreview(editor), 50);
 
             $ce = $('.CodeMirror');
 
