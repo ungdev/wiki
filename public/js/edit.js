@@ -48,6 +48,8 @@
             });
 
             $ce = $('.CodeMirror');
+
+            wikiMenu(editor, $ce);
         })
         .fail(function (res) {
             location.href = '/error/' + res.status;
@@ -96,6 +98,7 @@
                 data: JSON.stringify({ content: value })
             })
             .done(function () {
+                localStorage.setItem(uid, value);
                 $editArticle.removeClass('disabled').removeAttr('disabled');
                 Materialize.toast('Contenu sauvegardé !', 4000);
             })
@@ -168,6 +171,8 @@
 
     setTimeout(function autoSave () {
         var value = editor.getValue();
+        if (localStorage.hasOwnProperty(uid) && localStorage.getItem(uid) === value) return;
+
         localStorage.setItem(uid, value);
         Materialize.toast('Contenu auto-sauvegardé localement', 3000);
         setTimeout(autoSave, 60 * 1000);

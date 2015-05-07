@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="../css/main.css"/>
 
         <link rel="stylesheet" href="../css/edit.css">
+        <link rel="stylesheet" href="../css/menu.css"/>
     </head>
     <body class="grey-text text-darken-4">
         <main class="edit">
@@ -51,6 +52,69 @@
             </a>
         </div>
 
+        <div id="menu" style="display: none;">
+            <div id="arrow"></div>
+            <ul class="autocomplete">
+                <li class="autocomplete-item selected" data-insert="# |">
+                    <span class="title">Titre</span>
+                    <span class="code"># Titre 1</span>
+                </li>
+                <li class="autocomplete-item" data-insert="*|*">
+                    <span class="title">Italique</span>
+                    <span class="code">*Italique*</span>
+                </li>
+                <li class="autocomplete-item" data-insert="**|**">
+                    <span class="title">Gras</span>
+                    <span class="code">**Gras**</span>
+                </li>
+                <li class="autocomplete-item" data-insert="  \n|">
+                    <span class="title">Retour à la ligne</span>
+                    <span class="code">Deux espaces</span>
+                </li>
+                <li class="autocomplete-item" data-insert="* |\n*\n">
+                    <span class="title">Liste désordonnée</span>
+                    <span class="code">* ...</span>
+                </li>
+                <li class="autocomplete-item" data-insert="1. |\n2.\n">
+                    <span class="title">Liste ordonnée</span>
+                    <span class="code">1. ...</span>
+                </li>
+                <li class="autocomplete-item" data-insert="Titre Colonne | Titre Colonne\n---|---\nA|B\n" data-no-cursor="true">
+                    <span class="title">Table</span>
+                </li>
+                <li class="autocomplete-item" data-insert="![|](http://)">
+                    <span class="title">Image</span>
+                    <span class="code">![Titre](url)</span>
+                </li>
+                <li class="autocomplete-item" data-insert="\n> |\n">
+                    <span class="title">Citation</span>
+                    <span class="code">> Texte</span>
+                </li>
+                <li class="autocomplete-item" data-insert="\\( | \\)">
+                    <span class="title">Formule incluse</span>
+                    <span class="code">\\( latex \\)</span>
+                </li>
+                <li class="autocomplete-item" data-insert="$$ | $$">
+                    <span class="title">Bloc de formule</span>
+                    <span class="code">$$ latex $$</span>
+                </li>
+                <li class="autocomplete-item" data-insert="```cpp\n|\n```">
+                    <span class="title">Bloc de code</span>
+                </li>
+                <li class="autocomplete-item" data-insert="`|`">
+                    <span class="title">Code inclus</span>
+                    <span class="code">`code`</span>
+                </li>
+                <li class="autocomplete-item" data-insert="~~|~~">
+                    <span class="title">Code barré</span>
+                    <span class="code">~~Texte~~</span>
+                </li>
+                <li class="autocomplete-item" data-insert="[|](http://)">
+                    <span class="title">Lien avec titre</span>
+                    <span class="code">![Titre](url)</span>
+                </li>
+            </ul>
+        </div>
 
         <script defer src="../bower_components/jquery/dist/jquery.min.js"></script>
         <script defer src="../bower_components/materialize/dist/js/materialize.min.js"></script>
@@ -98,6 +162,7 @@
         <script defer src="../bower_components/codemirror/addon/selection/active-line.js"></script>
         <script defer src="../bower_components/codemirror/mode/meta.js"></script>
 
+        <script defer src="../js/menu.js"></script>
         <script defer src="../js/edit.js"></script>
     </body>
 </html>
