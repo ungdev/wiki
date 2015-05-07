@@ -37,8 +37,10 @@
             });
 
             if (localStorage.hasOwnProperty(uid)) {
-                editor.setValue(localStorage.getItem(uid));
-                Materialize.toast('Contenu restauré', 2000);
+                Materialize.toast('<span>Restaurer le contenu ?</span><a href="#" class="btn-flat yellow-text restore">Oui<a>', 4000);
+                $('.restore').one('click', function () {
+                    editor.setValue(localStorage.getItem(uid));
+                });
             }
 
             var debouncer = 0;
