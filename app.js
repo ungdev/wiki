@@ -17,10 +17,12 @@ var setupRouter = require('./lib/router');
 
 log.debug('Welcome to Wiki UTT');
 
+log.debug('Loading controllers');
 var controllers;
 
 controller()
     .then(function (controllers_) {
+        log.debug('Loaded controllers');
         controllers = controllers_;
     })
     .catch(function (err) {
@@ -97,6 +99,7 @@ r.connect(config.db)
             return res.redirect(config.baseURL + 'error/' + err.status);
         });
 
-        app.listen(config.port);
-        log.info('Listening on port %d', config.port);
+        app.listen(config.port, function () {
+            log.info('Listening on port %d', config.port);
+        });
     });

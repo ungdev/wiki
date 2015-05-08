@@ -15,7 +15,6 @@ module.exports = {
     route: '/rights/:uid(' + uidReg + ')',
     /**
      * This controller deletes one right
-     * 400 error if the right is malformed
      * 404 error if the right is not found
      * 500 error if the rethinkdb request fails
      * 200 otherwise
@@ -28,9 +27,7 @@ module.exports = {
         var conn = app.locals.conn;
         var log  = app.locals.log;
 
-        if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized', 'Not connected'));
-        }
+        if (!req.session.connected) return next(new APIError(401, 'Unauthorized', 'Not connected'));
 
         can(app)
             .editRight(req.session.userData.id, req.params.uid)
@@ -40,22 +37,18 @@ module.exports = {
                 var deleter = { deletedAt: new Date() };
 
                 log.debug('r.db(wiki).table(rights).get(' + req.params.uid + ').update(' + JSON.stringify(deleter) + ')');
-                r.db('wiki').table('rights')
+                return r.db('wiki').table('rights')
                     .get(req.params.uid)
                     .update(deleter)
                     .run(conn)
-                    .then(function (result) {
-                        if (result.skipped === 1) {
-                            return next(new APIError(404, 'Not Found', result));
-                        }
-                        return res
-                            .status(200)
-                            .json(result)
-                            .end();
-                    })
-                    .catch(function (err) {
-                        return next(new APIError(500, 'SQL Server Error', err));
-                    });
+            })
+            .then(function (result) {
+                if (result.skipped === 1) return next(new APIError(404, 'Not Found', result));
+
+                return res
+                    .status(200)
+                    .json(result)
+                    .end();
             })
             .catch(function (err) {
                 return next(new APIError(500, 'SQL Server Error', err));

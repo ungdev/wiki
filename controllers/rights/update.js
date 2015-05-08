@@ -1,4 +1,4 @@
-/* Updates an right */
+/* Updates a right */
 
 'use strict';
 
@@ -19,7 +19,7 @@ module.exports = {
         field('edit').toBooleanStrict()
     ),
     /**
-     * This controller creates one right
+     * This controller updates one right
      * 400 error if the right is malformed
      * 404 error if the right is not found
      * 500 error if the rethinkdb request fails
@@ -43,8 +43,7 @@ module.exports = {
         can(app)
             .editRight(req.session.userData.id, req.params.uid)
             .then(function (canEdit) {
-                if (!canEdit) return next(new APIError(401, 'Unauthorized', 'No right to edit'));
-
+                if (!canEdit)          return next(new APIError(401, 'Unauthorized', 'No right to edit'));
                 if (!req.form.isValid) return next(new APIError(400, 'Bad Request', req.form.errors));
 
                 req.form.updatedAt = new Date();
@@ -52,22 +51,18 @@ module.exports = {
                 if (!req.form.user) delete req.form.user;
 
                 log.debug('r.db(wiki).table(rights).get(' + req.params.uid + ').update(' + JSON.stringify(req.form) + ')');
-                r.db('wiki').table('rights')
+                return r.db('wiki').table('rights')
                     .get(req.params.uid)
                     .update(req.form)
                     .run(conn)
-                    .then(function (result) {
-                        if (result.skipped === 1) {
-                            return next(new APIError(404, 'Not Found', result));
-                        }
-                        return res
-                            .status(200)
-                            .json(result)
-                            .end();
-                    })
-                    .catch(function (err) {
-                        return next(new APIError(500, 'SQL Server Error', err));
-                    });
+            })
+            .then(function (result) {
+                if (result.skipped === 1) return next(new APIError(404, 'Not Found', result));
+
+                return res
+                    .status(200)
+                    .json(result)
+                    .end();
             })
             .catch(function (err) {
                 return next(new APIError(500, 'SQL Server Error', err));

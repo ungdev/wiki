@@ -127,6 +127,10 @@
         $addUsername.val('');
     });
 
+    /**
+     * Adds a <tr> for the right
+     * @param  {object} right The right data
+     */
     function addLine (right) {
         var $tr           = $('<tr/>').appendTo($tbody);
 

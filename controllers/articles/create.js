@@ -39,18 +39,10 @@ module.exports = {
         var conn = app.locals.conn;
         var log  = app.locals.log;
 
-        if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized'));
-        }
+        if (!req.session.connected) return next(new APIError(401, 'Unauthorized'));
+        if (!req.form.isValid)      return next(new APIError(400, 'Bad Request', req.form.errors));
 
-        if (!req.form.isValid) {
-            next(new APIError(400, 'Bad Request', req.form.errors));
-            return;
-        }
-
-        if (!req.form.content) {
-            req.form.content = '';
-        }
+        if (!req.form.content) req.form.content = '';
 
         req.form.createdAt      = new Date();
         req.form.updatedAt      = new Date();

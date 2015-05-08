@@ -81,6 +81,9 @@
         }
     });
 
+    /**
+     * Opens the helper menu
+     */
     function openMenu () {
         isOpen = true;
         var cursor = editor.display.cursorDiv.children[0];
@@ -108,11 +111,17 @@
         }, 120);
     }
 
+    /**
+     * Closes the helper menu
+     */
     function closeMenu () {
         $menu.fadeOut('fast');
         isOpen = false;
     }
 
+    /**
+     * Move the selected helper up
+     */
     function prevResult () {
         var $currentSelected = $('.autocomplete-item.selected');
         var $prev            = $currentSelected.prev();
@@ -126,6 +135,9 @@
         }
     }
 
+    /**
+     * Moves the selected helper down
+     */
     function nextResult () {
         var $currentSelected = $('.autocomplete-item.selected');
         var $next            = $currentSelected.next();
@@ -139,6 +151,9 @@
         }
     }
 
+    /**
+     * Inserts the snippet onto the Codemirror editor
+     */
     function selectResult () {
         var $li = $ul.children().eq(selected);
         var insert = $li.data('insert').replace(/\\n/g, '\n');

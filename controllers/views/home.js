@@ -8,7 +8,7 @@ module.exports = {
     method: 'get',
     route: '/',
     /**
-     * This controller generates the login html and the home html
+     * This controller shows the login page or the home page wether the user is connected or not
      * @param  {object} req The request
      * @param  {object} res The response
      */

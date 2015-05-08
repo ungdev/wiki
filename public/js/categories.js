@@ -41,6 +41,10 @@
             location.href = '/error/' + res.status;
         });
 
+    /**
+     * Binds the modal footer buttons
+     * Fixes materialize bug
+     */
     function bind () {
         setTimeout(function () {
             $confirmed.one('click', doDelete);
@@ -50,6 +54,9 @@
 
     bind();
 
+    /**
+     * Send the DELETE request
+     */
     function doDelete () {
         $confirmed.addClass('disabled').attr('disabled', '');
 

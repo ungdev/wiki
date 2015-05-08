@@ -7,8 +7,8 @@ module.exports = {
     route: '/login/getURL',
     /**
      * This controller generates the url to login on etu site
-     * @param  {object}   req  The request
-     * @param  {object}   res  The response
+     * @param  {object} req The request
+     * @param  {object} res The response
      */
     controller: function (req, res) {
         var app = req.app;
@@ -20,7 +20,7 @@ module.exports = {
             .json({
                 url: config.etu.baseURL +
                 'oauth/authorize?client_id=' + config.etu.id +
-                '&scopes=public%20private_user_account%20private_user_organizations' +
+                '&scopes=' + config.etu.scopes +
                 '&response_type=code' +
                 '&state=login'
             });

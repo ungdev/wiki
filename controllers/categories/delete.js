@@ -15,7 +15,6 @@ module.exports = {
     route: '/categories/:uid(' + uidReg + ')/:move(' + uidReg + ')',
     /**
      * This controller deletes one category
-     * 400 error if the category is malformed
      * 404 error if the category is not found
      * 500 error if the rethinkdb request fails
      * 200 otherwise
@@ -48,9 +47,7 @@ module.exports = {
                     .run(conn);
             })
             .then(function (result) {
-                if (result.skipped === 1) {
-                    return next(new APIError(404, 'Not Found', result));
-                }
+                if (result.skipped === 1) return next(new APIError(404, 'Not Found', result));
                 return res
                     .status(200)
                     .json(result)

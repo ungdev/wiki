@@ -3,7 +3,7 @@
 'use strict';
 
 var Promise = require('bluebird');
-var fs      = Promise.promisifyAll(require("fs"));
+var fs      = Promise.promisifyAll(require('fs'));
 var path    = require('path');
 
 module.exports = function () {

@@ -172,6 +172,7 @@
         }
     }
 
+    // Auto save in localStorage
     setTimeout(function autoSave () {
         var value = editor.getValue();
         if (localStorage.hasOwnProperty(uid) && localStorage.getItem(uid) === value) return;

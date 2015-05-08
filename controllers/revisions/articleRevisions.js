@@ -1,4 +1,4 @@
-/* List revisions, or get one's details */
+/* Get one revision details */
 
 'use strict';
 
@@ -30,9 +30,7 @@ module.exports = {
         var conn = app.locals.conn;
         var log  = app.locals.log;
 
-        if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized', 'Not connected'));
-        }
+        if (!req.session.connected) return next(new APIError(401, 'Unauthorized', 'Not connected'));
 
         var uid = req.params.uid;
 
@@ -43,30 +41,27 @@ module.exports = {
                     if (!canView) return next(new APIError(401, 'Unauthorized', 'No right to view'));
 
                     log.debug('r.db(wiki).table(revisions).filter({article: ' + uid + '}).filter(r.row(deletedAt).ne(null))');
-                    r.db('wiki').table('revisions')
+                    return r.db('wiki').table('revisions')
                         .filter({
                             article: uid
                         })
                         .filter(r.row('deletedAt').ne(null))
                         .run(conn)
-                        .then(function (revisions) {
-                            return revisions.toArray();
-                        })
-                        .then(function (revisions) {
-                            return res
-                                .status(200)
-                                .json(revisions)
-                                .end();
-                        })
-                        .catch(function (err) {
-                            return next(new APIError(500, 'SQL Server Error', err));
-                        });
+                })
+                .then(function (revisions) {
+                    return revisions.toArray();
+                })
+                .then(function (revisions) {
+                    return res
+                        .status(200)
+                        .json(revisions)
+                        .end();
                 })
                 .catch(function (err) {
                     return next(new APIError(500, 'SQL Server Error', err));
                 });
         } else {
-                return next(new APIError(400, 'Bad Request', 'Missing uid'));
+            return next(new APIError(400, 'Bad Request', 'Missing uid'));
         }
     }
 };

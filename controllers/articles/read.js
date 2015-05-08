@@ -30,9 +30,7 @@ module.exports = {
         var conn = app.locals.conn;
         var log  = app.locals.log;
 
-        if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized', 'Not connected'));
-        }
+        if (!req.session.connected) return next(new APIError(401, 'Unauthorized', 'Not connected'));
 
         var uid = req.params.uid;
 
@@ -43,22 +41,17 @@ module.exports = {
                     if (!canView) return next(new APIError(401, 'Unauthorized', 'No right to view'));
 
                     log.debug('r.db(wiki).table(articles).get(' + uid + ')');
-                    r.db('wiki').table('articles')
+                    return r.db('wiki').table('articles')
                         .get(uid)
                         .run(conn)
-                        .then(function (article) {
-                            if (!article || article.deletedAt !== null) {
-                                return next(new APIError(404, 'Not Found'));
-                            }
+                })
+                .then(function (article) {
+                    if (!article || article.deletedAt !== null) return next(new APIError(404, 'Not Found'));
 
-                            return res
-                                .status(200)
-                                .json(article)
-                                .end();
-                        })
-                        .catch(function (err) {
-                            return next(new APIError(500, 'SQL Server Error', err));
-                        });
+                    return res
+                        .status(200)
+                        .json(article)
+                        .end();
                 })
                 .catch(function (err) {
                     return next(new APIError(500, 'SQL Server Error', err));

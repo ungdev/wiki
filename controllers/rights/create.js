@@ -39,14 +39,9 @@ module.exports = {
         var conn = app.locals.conn;
         var log  = app.locals.log;
 
-        if (!req.session.connected) {
-            return next(new APIError(401, 'Unauthorized', 'Not connected'));
-        }
+        if (!req.session.connected) return next(new APIError(401, 'Unauthorized', 'Not connected'));
+        if (!req.form.isValid)      return next(new APIError(400, 'Bad Request', req.form.errors));
 
-        if (!req.form.isValid) {
-            next(new APIError(400, 'Bad Request', req.form.errors));
-            return;
-        }
         can(app)
             .edit(req.session.userData.id, req.form.article)
             .then(function (canEdit) {
@@ -57,18 +52,15 @@ module.exports = {
                 req.form.deletedAt = null;
 
                 log.debug('r.db(wiki).table(rights).insert(' + JSON.stringify(req.form) + ')');
-                r.db('wiki').table('rights')
+                return r.db('wiki').table('rights')
                     .insert(req.form)
                     .run(conn)
-                    .then(function (result) {
-                        return res
-                            .status(200)
-                            .json(result.generated_keys)
-                            .end();
-                    })
-                    .catch(function (err) {
-                        return next(new APIError(500, 'SQL Server Error', err));
-                    });
+            })
+            .then(function (result) {
+                return res
+                    .status(200)
+                    .json(result.generated_keys)
+                    .end();
             })
             .catch(function (err) {
                 return next(new APIError(500, 'SQL Server Error', err));

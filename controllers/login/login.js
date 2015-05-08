@@ -21,9 +21,7 @@ module.exports = {
         var config = app.locals.config;
         var APIError = app.locals.APIError;
 
-        if (!req.query.authorization_code || req.query.authorization_code.length === 0) {
-            return next(new APIError(400, 'Bad Request'));
-        }
+        if (!req.query.authorization_code || req.query.authorization_code.length === 0) return next(new APIError(400, 'Bad Request'));
 
         var form = {
             grant_type: 'authorization_code',

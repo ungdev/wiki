@@ -6,7 +6,7 @@ module.exports = {
     method: 'get',
     route: '/error/:status(\\d{3})',
     /**
-     * This controller renders the server or the user error
+     * This controller shows the server or the user error page
      * @param  {object} req  The request
      * @param  {object} res  The response
      */

@@ -17,6 +17,7 @@
     "etu": {
         "baseURL": "https://etu.utt.fr/api/",
         "id": "",
-        "secret": ""
+        "secret": "",
+        "scopes": "public%20private_user_account%20private_user_organizations"
     }
 }

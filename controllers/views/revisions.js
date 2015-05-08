@@ -9,7 +9,7 @@ module.exports = {
     method: 'get',
     route: '/history/:uid([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})',
     /**
-     * This controller lists the previous versions of an article
+     * This controller shows the previous versions of an article page
      * @param  {object}   req The request
      * @param  {object}   res The response
      * @param  {Function} next The next middleware

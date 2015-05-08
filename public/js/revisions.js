@@ -27,7 +27,9 @@
             location.href = '/error/' + res.status;
         });
 
-    // Retrieve histories
+    /**
+     * Retrieves history after getting the article
+     */
     function retrieveHistory () {
         $
             .get('/revisions/' + uid)

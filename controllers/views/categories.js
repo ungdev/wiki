@@ -9,7 +9,7 @@ module.exports = {
     method: 'get',
     route: '/admin/',
     /**
-     * This controller shows the categories management
+     * This controller shows the categories management page
      * @param  {object}   req  The request
      * @param  {object}   res  The response
      * @param  {Function} next The next middleware
