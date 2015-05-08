@@ -29,7 +29,7 @@ bower install
 
 ## Edit configuration :
 
-Copy the `{wiki_dir}/config.json.example` file to `{wiki_dir}/config.json` to match the server
+Copy the `{wiki_dir}/config.json.example` file to `{wiki_dir}/config.json` and edit it to match the server
 
 ## Launch
 
