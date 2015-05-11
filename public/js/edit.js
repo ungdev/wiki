@@ -33,11 +33,14 @@
                 showTrailingSpace: true,
                 autoCloseTags: true,
                 viewportMargin: Infinity,
-                theme: 'pastel-on-dark'
+                theme: 'pastel-on-dark',
+                historyEventDelay: 400
             });
 
+            window.ce = editor;
+
             if (localStorage.hasOwnProperty(uid) && localStorage.getItem(uid) !== editor.getValue()) {
-                Materialize.toast('<span>Restaurer le contenu ?</span><a href="#" class="btn-flat yellow-text restore">Oui<a>', 4000);
+                Materialize.toast('<span>Restaurer le contenu ?</span><a href="#" class="btn-flat yellow-text right restore">Oui<a>', 4000);
                 $('.restore').one('click', function () {
                     editor.setValue(localStorage.getItem(uid));
                 });
@@ -46,6 +49,9 @@
             var debouncer = 0;
             editor.on('change', function () {
                 clearTimeout(debouncer);
+                setTimeout(function () {
+                    console.log(editor.doc.getHistory());
+                }, 500);
                 debouncer = setTimeout(doPreview(editor), 500);
             });
             setTimeout(doPreview(editor), 50);
@@ -179,8 +185,8 @@
 
         localStorage.setItem(uid, value);
         Materialize.toast('Contenu auto-sauvegardé localement', 3000);
-        setTimeout(autoSave, 60 * 1000);
-    }, 60 * 1000);
+        setTimeout(autoSave, 30 * 1000);
+    }, 30 * 1000);
 
     // Enable zen tooltip and modals
     $('.tooltipped').tooltip();

@@ -35,6 +35,9 @@
             Right: function (cm) {
                 cm.execCommand('goCharRight');
                 if (isOpen) setTimeout(openMenu, 50);
+            },
+            Esc: function () {
+                if (isOpen) setTimeout(closeMenu, 50);
             }
         });
 
