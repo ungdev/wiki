@@ -5,12 +5,17 @@
 
     var $target        = $('.target');
     var $deleteConfirm = $('#deleteConfirm');
-    var $newCategory   = $('#newCategory');
     var $category      = $('.category');
 
+    var $addCategory          = $('#addCategory');
+    var $newCategory          = $('#newCategory');
+    var $createCategory       = $('#createCategory');
+    var $createCategoryOpener = $('#createCategoryOpener');
+    var $createCategorySubmit = $('button.modal-close', $createCategory);
+    var $cancelCategorySubmit = $('a.modal-close', $createCategory);
 
-    var $confirmed = $('button.modal-close');
-    var $cancelled = $('a.modal-close');
+    var $confirmed = $('button.modal-close', $deleteConfirm);
+    var $cancelled = $('a.modal-close', $deleteConfirm);
 
     var categoryToDelete;
     var $elemToSlideUp;
@@ -19,19 +24,7 @@
         .get('/categories/')
         .done(function (res) {
             res.forEach(function (category) {
-                var $link = $('<li class="collection-item">' +
-                    category.name +
-                    '<i class="mdi-content-clear right red-text"></i>' +
-                    '</li>');
-
-                $target.append($link).children().last().children('i').click(function () {
-                    categoryToDelete = category;
-                    $elemToSlideUp = $link;
-                    $category.text(categoryToDelete.name);
-                    $deleteConfirm.openModal();
-                });
-
-                $newCategory.append('<option value="' + category.id + '">' + category.name + '</option>');
+                addRow(category);
             });
 
             $('select').material_select();
@@ -41,6 +34,7 @@
             location.href = '/error/' + res.status;
         });
 
+
     /**
      * Binds the modal footer buttons
      * Fixes materialize bug
@@ -49,13 +43,15 @@
         setTimeout(function () {
             $confirmed.one('click', doDelete);
             $cancelled.one('click', bind);
+            $createCategorySubmit.one('click', doCreate);
+            $cancelCategorySubmit.one('click', bind);
         });
     }
 
     bind();
 
     /**
-     * Send the DELETE request
+     * Sends the DELETE request
      */
     function doDelete () {
         $confirmed.addClass('disabled').attr('disabled', '');
@@ -79,6 +75,56 @@
         bind();
     }
 
-    // Enable zen tooltip
+    /**
+     * Sends the POST request
+     */
+    function doCreate () {
+        var value = $addCategory.val();
+        $
+            .ajax({
+                type: 'post',
+                url: '/categories/',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ name: value })
+            })
+            .done(function (res) {
+                addRow({
+                    name: value,
+                    id: res[0]
+                });
+                $('select').material_select();
+            })
+            .fail(function (res) {
+                location.href = '/error/' + res.status;
+            });
+        bind();
+    }
+
+    /**
+     * Add a line (category) to the collection
+     * @param  {object} category The category to add
+     */
+    function addRow (category) {
+        console.log(category);
+        var $link = $('<li class="collection-item">' +
+            category.name +
+            '<i class="mdi-content-clear right red-text"></i>' +
+            '</li>');
+
+        $target.append($link).children().last().children('i').click(function () {
+            categoryToDelete = category;
+            $elemToSlideUp = $link;
+            $category.text(categoryToDelete.name);
+            $deleteConfirm.openModal();
+        });
+
+        $newCategory.append('<option value="' + category.id + '">' + category.name + '</option>');
+    }
+
+    // Enable zen tooltip and modal
     $('.tooltipped').tooltip();
+    $createCategoryOpener.click(function (e) {
+        e.preventDefault();
+        $createCategory.openModal();
+    });
 }());
