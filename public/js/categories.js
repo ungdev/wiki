@@ -105,7 +105,6 @@
      * @param  {object} category The category to add
      */
     function addRow (category) {
-        console.log(category);
         var $link = $('<li class="collection-item">' +
             category.name +
             '<i class="mdi-content-clear right red-text"></i>' +
