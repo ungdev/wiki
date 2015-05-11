@@ -3,7 +3,11 @@
 (function () {
     'use strict';
 
+    var socket = io();
+
     var uid           = location.pathname.split('/')[2];
+    socket.emit('join', uid);
+
     var $articleTitle = $('#articleTitle');
     var $title        = $('title');
     var $target       = $('.target');
@@ -12,6 +16,7 @@
     var $modeChange   = $('#modeChange');
     var $bodyhtml     = $('body').add('html');
     var $editArticle  = $('#editArticle');
+    var suppress      = false;
     var $ce;
 
     var editor;
@@ -47,13 +52,39 @@
             }
 
             var debouncer = 0;
-            editor.on('change', function () {
+            editor.on('change', function (cm, change) {
                 clearTimeout(debouncer);
-                setTimeout(function () {
-                    console.log(editor.doc.getHistory());
-                }, 500);
                 debouncer = setTimeout(doPreview(editor), 500);
+                if (suppress) return;
+                gotChange(cm, change);
             });
+
+            socket.on('getLastVersion', function () {
+                console.log('Someone asked for the last version');
+                socket.emit('answerLastVersion', editor.getValue());
+            });
+
+            socket.once('answerLastVersion', function (value) {
+                console.log('Set last version from the others');
+                suppress = true;
+                editor.setValue(value);
+                suppress = false;
+            });
+
+            socket.on('remove', function (pos, length) {
+                suppress = true;
+                var from = editor.posFromIndex(pos);
+                var to   = editor.posFromIndex(pos + length);
+                editor.replaceRange('', from, to);
+                suppress = false;
+            });
+
+            socket.on('insert', function (pos, text) {
+                suppress = true;
+                editor.replaceRange(text, editor.posFromIndex(pos));
+                suppress = false;
+            });
+
             setTimeout(doPreview(editor), 50);
 
             $ce = $('.CodeMirror');
@@ -176,6 +207,30 @@
             // KateX
             renderMathInElement($preview[0]);
         }
+    }
+
+
+    function gotChange (cm, change) {
+        var startPos = change.from.ch;
+        var i        = 0;
+
+        while (i < change.from.line) {
+            startPos += cm.lineInfo(i).text.length + 1;
+            i++;
+        }
+
+        var inserted = change.to.line === change.from.line && change.to.ch === change.from.ch;
+        if (!inserted) {
+            var delLen = change.removed.length - 1;
+            for (var rm = 0; rm < change.removed.length; rm++) {
+                delLen += change.removed[rm].length;
+            }
+
+            socket.emit('remove', startPos, delLen);
+        }
+
+        if (change.text) socket.emit('insert', startPos, change.text.join('\n'));
+        if (change.next) gotChange(cm, change.next);
     }
 
     // Auto save in localStorage

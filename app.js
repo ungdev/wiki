@@ -7,13 +7,19 @@ var express    = require('express');
 var session    = require('express-session');
 var bodyParser = require('body-parser');
 var morgan     = require('morgan');
+var socketio   = require('socket.io');
+var http       = require('http');
 
 var app         = express();
+var server      = http.Server(app);
+var io          = socketio(server);
+
 var controller  = require('./controllers');
 var config      = require('./config.json');
 var log         = require('./lib/log')(config);
 var APIError    = require('./lib/APIError');
 var setupRouter = require('./lib/router');
+var setupIO     = require('./lib/socketServer');
 
 log.debug('Welcome to Wiki UTT');
 
@@ -32,12 +38,13 @@ controller()
 r.connect(config.db)
     .then(function (conn) {
         log.info('Connected to databse');
-        app.locals.log      = log;
-        app.locals.conn     = conn;
-        app.locals.config   = config;
-        app.locals.APIError = APIError;
+        app.locals.log    = log;
+        app.locals.conn   = conn;
+        app.locals.config = config;
     })
     .then(function () {
+        setupIO(log, io);
+
         // Request logger
         app.use(morgan(':method :url :status :response-time ms', {
             stream: {
@@ -99,7 +106,7 @@ r.connect(config.db)
             return res.redirect(config.baseURL + 'error/' + err.status);
         });
 
-        app.listen(config.port, function () {
+        server.listen(config.port, function () {
             log.info('Listening on port %d', config.port);
         });
     });
