@@ -4,6 +4,7 @@
 
 var post  = require('../../lib/post');
 var get_  = require('../../lib/get');
+var APIError = require('../../lib/APIError');
 
 module.exports = {
     method: 'get',
@@ -19,7 +20,6 @@ module.exports = {
         var app = req.app;
 
         var config = app.locals.config;
-        var APIError = app.locals.APIError;
 
         if (!req.query.authorization_code || req.query.authorization_code.length === 0) return next(new APIError(400, 'Bad Request'));
 
